@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/4_dairesel_baglantili_liste_siralama.dir/main.cpp.o  -o 4_dairesel_baglantili_liste_siralama 

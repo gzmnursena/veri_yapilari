@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/6_indekse_gore_silme.dir/main.cpp.o  -o 6_indekse_gore_silme 

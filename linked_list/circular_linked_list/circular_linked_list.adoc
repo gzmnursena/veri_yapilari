@@ -1,0 +1,721 @@
+= Çevrimsel Bağlantılı Liste (Circular Linked List)
+
+image::images/cevrimsel.png[]
+
+Çevrimsel bağlantılı listelerde şekilde görüleceği gibi düğümler arasında çevrimsel bir bağlantı vardır. Eğer n elemanlı
+bir bağlantılı listede n adım hareket edilirse yine listenin başladığı noktaya dönülür. Çevrimli bağlantılı listede
+düğümlerden birinin adresini bilmek yeterlidir; buradan tüm liste kayıtlarına erişilebilir. Uygulama istenen
+fonksiyonların gerçekleştirime kolaylaştırdığı durumlarda iki yönlü çevrimsel bağlantınızda oluşturulabilir.
+
+
+=== Dairesel Bağlantılı Liste Oluşturma
+
+Örnek: 1-dairesel_baglantili_liste_olusturma
+
+Dairesel bağlı liste oluşturma...
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node{//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+};
+
+//dairesel bağlantılı listenin başında bir düğüm eklemek için fonksiyon
+void Node::basaEkle(Node **root_ref, int data)
+{
+    Node *ptr1 = new Node();//Dinamik olarak bir düğüm oluşturulur
+    Node *temp = *root_ref;
+    ptr1->data = data;//Verilerin atanması
+    ptr1->next = *root_ref;
+
+    //Bagli liste NULL değilse, son düğümün bir sonraki öğesini ayarlayın
+    if (*root_ref != NULL){
+        while (temp->next != *root_ref)
+            temp = temp->next;
+        temp->next = ptr1;
+    }
+    else
+        ptr1->next = ptr1;//İlk düğüm için
+
+    *root_ref = ptr1;
+}
+
+void Node::yazdir(Node *root)//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    Node *temp = root;//dairesel bagli listede düğümlerin tekrarlanmaması için temp isimli düğümde root düğümü saklanır
+    if (root != NULL){
+        do{
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        }while (temp != root);
+    }
+}
+
+int main()
+{
+    Node node;
+    Node *root = NULL;
+
+    // 11->2->56->12
+    node.basaEkle(&root, 12);//bağlı listeye 12,56,2,11 değerleri eklenir
+    node.basaEkle(&root, 56);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 11);
+
+    cout << "Dairesel baglantili liste\n";
+    node.yazdir(root);//bagli liste yazdırılır
+
+    return 0;
+}
+
+----
+
+Ekran Çıktısı:
+
+ Dairesel baglantili liste
+ 11 2 56 12 
+
+=== Dairesel Listeye Düğüm Ekleme
+
+Örnek: 2-dairesel_baglantili_listeye_eleman_ekleme
+
+Dairesel bağlı listeye düğüm ekleme...
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node{//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+public:
+    int data;
+    Node *next;
+    Node *bosListeyeEkle(Node *, int);
+    Node *basaEkle(Node *, int);
+    Node *sonaEkle(Node *, int);
+    Node *dugumunSonunaEkle(Node *, int , int);
+    void yazdir(Node *);
+};
+
+//Bu fonksiyon sadece boş liste için kullanılır
+Node *Node::bosListeyeEkle(Node *son, int data)
+{
+    if (son != NULL)
+        return son;
+
+    Node *temp = new Node();//Dinamik olarak bir düğüm oluşturulur
+    //Verileri atama
+    temp -> data = data;
+    son = temp;
+
+    son -> next = son;//Bağlı liste oluşturulur
+    return son;
+}
+
+Node *Node::basaEkle(Node *son, int data)
+{
+    if (son == NULL)//ilk düğümü eklerken; boş listeye eklendiği için bosListeyeEkle() fonksiyonunu çağırıyoruz
+        return bosListeyeEkle(son, data);
+
+    Node *temp = new Node();//Dinamik olarak bir düğüm oluşturulur
+
+    //Verilerin atanması
+    temp -> data = data;
+    //Düğüm bağlantılarının ayarlanması
+    temp -> next = son -> next;
+    son -> next = temp;
+    return son;
+}
+
+Node *Node::sonaEkle(Node *son, int data)
+{
+    if (son == NULL)//ilk düğümü eklerken; boş listeye eklendiği için bosListeyeEkle() fonksiyonunu çağırıyoruz
+        return bosListeyeEkle(son, data);
+
+    Node *temp = new Node();//Dinamik olarak bir düğüm oluşturulur
+    //Verilerin atanması
+    temp -> data = data;
+
+    //Düğüm bağlantılarının ayarlanması
+    temp -> next = son -> next;
+    son -> next = temp;
+    son = temp;
+    return son;
+}
+
+Node *Node::dugumunSonunaEkle(Node *son, int data, int item)
+{
+    if (son == NULL)
+        return NULL;
+
+    Node *temp, *p;
+    p = son -> next;
+    //Sonuna veri eklenecek düğümü arar
+    do{
+        if (p ->data == item){
+            temp = new Node();//Dinamik olarak bir düğüm oluşturulur
+            //Verilerin atanması
+            temp -> data = data;
+            //Düğüm bağlantılarının ayarlanması
+            temp -> next = p -> next;
+            //Oluşturulan düğümün sonuna yeni düğüm ekleniyor
+            p -> next = temp;
+
+            if (p == son)//Son düğüm kontrolu yapılıyor
+                son = temp;
+            return son;
+        }
+        p = p -> next;//tüm düğümler dolaşılır
+    }while(p != son -> next);
+
+    cout << item << " listede yok\n" << endl;
+    return son;
+
+}
+
+void Node::yazdir(Node *son)
+{
+    Node *p;
+
+    if (son == NULL){//liste boşsa, return edilir
+        cout << "liste bos\n" << endl;
+        return;
+    }
+
+    p = son -> next;//bagli listenin ilk düğümünü işaret eder
+
+    //bagli listede dolaşmayı sağlar
+    do{
+        cout << p -> data << " ";
+        p = p -> next;
+
+    }while(p != son->next);
+
+}
+
+int main()
+{
+    /*İlk olarak boş olan bağlı listeye bir düğüm eklenir.
+    Daha sonra listenin başına,sonuna,ve bir düğümden sonra veri eklenerek dairesel bağlı liste yazdırılır*/
+    Node node;
+    Node *son = NULL;
+    son = node.bosListeyeEkle(son, 6);
+    son = node.basaEkle(son, 4);
+    son = node.basaEkle(son, 2);
+    son = node.sonaEkle(son, 8);
+    son = node.sonaEkle(son, 12);
+    son = node.dugumunSonunaEkle(son, 10, 8);
+    node.yazdir(son);
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 2 4 6 8 10 12 
+
+ 
+=== Listeyi İkiye Bölme
+
+
+Örnek:3-dairesel_baglantili_listeyi_ikiye_bolme
+
+Dairesel bağlı listeyi ikiye bölerek iki tane dairesel bağlı liste oluşturma...
+
+[source,c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node{//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+public:
+    int data;
+    Node *next;
+    void listeyiBol(Node *, Node **, Node **);
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+};
+
+//Bir listeyi (root'tan başlayarak) iki listeye bölmek için kullanılan fonksiyon
+// root1_ref ve root2_ref, iki bağlantılı bağlantılı listenin root düğümlerine yapılan referanslardır
+void Node::listeyiBol(Node *root, Node **root1_ref, Node **root2_ref)
+{
+    Node *slow_ptr = root;
+    Node *fast_ptr = root;
+
+    if(root == NULL)//liste boş ise return edilir
+        return;
+
+    //Dairesel listede tek düğüm varsa
+    //fast_ptr->next root olur ve hatta düğümler için fast_ptr->next->next root olur
+    while(fast_ptr->next != root && fast_ptr->next->next != root){
+        fast_ptr = fast_ptr->next->next;
+        slow_ptr = slow_ptr->next;
+    }
+
+    //listede çift düğüm varsa fast_ptr'yi fast_ptr->next'ne taşır
+    if(fast_ptr->next->next == root)
+        fast_ptr = fast_ptr->next;
+
+    *root1_ref = root;//İlk yarıdaki düğümleri root işaretçisini ayarlama
+
+    //İkinci yarıdaki düğümleri root işaretçisini ayarlama
+    if(root->next != root)
+        *root2_ref = slow_ptr->next;
+
+    fast_ptr->next = slow_ptr->next;//İkinci yarıdaki düğümleri dairesel liste yapar
+
+    slow_ptr->next = root;//İlk yarıdaki düğümleri dairesel liste yapar
+}
+
+//dairesel bağlantılı listenin başında bir düğüm eklemek için fonksiyon
+void Node::basaEkle(Node **root_ref, int data)
+{
+    Node *ptr1 = new Node();//Dinamik olarak bir düğüm oluşturulur
+    Node *temp = *root_ref;
+    ptr1->data = data;//Verilerin atanması
+    ptr1->next = *root_ref;
+
+    //Bagli liste NULL değilse, son düğümün bir sonraki öğesini ayarlayın
+    if (*root_ref != NULL){
+        while (temp->next != *root_ref)
+            temp = temp->next;
+        temp->next = ptr1;
+    }
+    else
+        ptr1->next = ptr1;//İlk düğüm için
+
+    *root_ref = ptr1;
+}
+
+
+void Node::yazdir(Node *root)//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    Node *temp = root;//dairesel bagli listede düğümlerin tekrarlanmaması için temp isimli düğümde root düğümü saklanır
+    if (root != NULL){
+        do{
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        }while (temp != root);
+    }
+}
+
+int main()
+{
+    Node node;
+    Node *root = NULL;
+    Node *root1 = NULL;
+    Node *root2 = NULL;
+
+    // 12->56->2->11
+    node.basaEkle(&root, 12);//listenin başına 12,56,2,11 düğümleri eklenir
+    node.basaEkle(&root, 56);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 11);
+
+    cout << "Dairesel baglantili liste:";
+    node.yazdir(root);//liste yazdırılır
+
+    node.listeyiBol(root, &root1, &root2);//liste ikiye bölünür
+
+    cout << "\nIlk dairesel baglantili liste:";
+    node.yazdir(root1);//ilk dairesel bağlı liste yazdırılır
+
+    cout << "\nIkinci dairesel baglantili liste:";
+    node.yazdir(root2);//ikinci dairesel bağlı liste yazdırılır
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ Dairesel baglantili liste:11 2 56 12 
+ Ilk dairesel baglantili liste:11 2 
+ Ikinci dairesel baglantili liste:56 12 
+
+
+=== Dairesel Bağlı Listeyi Sıralama
+
+Örnek:4-dairesel_baglantili_liste_siralama
+
+Dairesel bağlı listeyi sıralama...
+
+[source,c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node{//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+public:
+    int data;
+    Node *next;
+    void siraliEkle(Node **, Node *);
+    void yazdir(Node *);
+};
+
+//bir listeye sıralı bir şekilde yeni düğüm eklemek için kullanılan fonksiyon
+
+void Node::siraliEkle(Node **root_ref, Node *new_node)
+{
+    Node *current = *root_ref;//Bu fonksiyon, giriş bağlantılı listenin başını değiştirebileceğinden, root düğümüne bir işaretçi bekler
+
+    if (current == NULL){//bagli liste boş ise
+        new_node->next = new_node;//yeni düğümü ekler
+        *root_ref = new_node;
+    }
+
+    else if (current->data >= new_node->data){//
+       //yeni düğümdeki veri, root'ta bulunan veriden daha küçükse veya eşitse, son düğümün yanında değişiklik yapmamız gerekir
+        while(current->next != *root_ref)
+            current = current->next;
+        current->next = new_node;//son düğüme eklenecek olan yeni düğüm bağlanır
+        new_node->next = *root_ref;
+        *root_ref = new_node;
+    }
+
+    else{//yeni düğümdeki veri, root'ta bulunan veriden daha büyükse
+        //eklemeden önce yeni düğümün bağlanacağı düğüm bulunur
+        while (current->next!= *root_ref &&
+               current->next->data < new_node->data)
+            current = current->next;
+
+        new_node->next = current->next;
+        current->next = new_node;//yeni düğüme değer eklenir
+    }
+}
+
+void Node::yazdir(Node *root)//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    Node *temp = root;//dairesel bagli listede düğümlerin tekrarlanmaması için temp isimli düğümde root düğümü saklanır
+    if (root != NULL){
+        do{
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        }while (temp != root);
+    }
+}
+
+int main()
+{
+    int arr[] = {12, 56, 2, 11, 1, 90};
+
+    Node node;
+    Node *root = NULL;
+    Node *temp;
+
+
+    //1 ->2->11->12->56->90
+    for (int i = 0; i< 6; i++)
+    {
+        temp = new Node();//Dinamik olarak bir düğüm oluşturulur
+        temp->data = arr[i];//oluşturulan düğümün datasına dizinin i.elemanı eklenir
+        node.siraliEkle(&root, temp);//eklenen elemanlar arttıkça düğümlerin sirali eklenmesini siraliEkle() fonksiyonu sağlar.
+    }
+
+    node.yazdir(root);//bağlı liste yazdırılır
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ 1 2 11 12 56 90 
+ 
+ 
+=== Dairesel Bağlı Liste mi?
+
+Örnek:5-dairesel_baglantili_liste_kontrolu
+
+Bağlı listenin dairesel mi olduğunu kontrol eden program...
+
+[source,c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node *next;
+    bool daireselmi(Node *);
+    Node *newNode(int);
+};
+
+bool Node::daireselmi(Node *root)
+{
+    if (root == NULL)//bagli liste boş ise return edilir
+       return true;
+
+    Node *node = root->next;
+
+    while (node != NULL && node != root)
+       node = node->next;//node listesini root listesine göre doldurur
+
+    return (node == root);
+    //iki liste eşitse (root dairesel liste oldugu için node'da elemanlar eklenince dairesel liste oluyorsa) true değerini döndürür
+}
+
+Node *Node::newNode(int data)
+{
+    Node *temp = new Node;//dinamik olarak bir düğüm oluşturulur
+    temp->data = data;//düğümün datasına değeri atanır
+    temp->next = NULL;//düğümün sonuna başka bir düğüm eklemek için
+    return temp;
+}
+
+int main()
+{
+    Node node;
+    Node* root = node.newNode(1);
+    root->next = node.newNode(2);
+    root->next->next = node.newNode(3);
+    root->next->next->next = node.newNode(4);//root listesine yeni düğümler oluşturarak değer eklenir
+
+    node.daireselmi(root)? cout << "Yes"<< endl ://liste dairesel mi?
+                      cout << "No"<< endl ;
+
+    root->next->next->next->next = root;
+
+    node.daireselmi(root)? cout << "Yes"<< endl :
+                      cout << "No"<< endl ;
+
+    return 0;
+}
+
+----
+
+
+Ekran Çıktısı:
+
+ No
+ Yes
+
+
+=== Dairesel Bağlı Listeden Düğüm Silme
+
+Örnek: 6-dairesel_baglantili_listeden_eleman_silme
+
+Dairesel bağlı listeden düğüm silme...
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    void dugumSil(Node **, int);
+    void yazdir(Node *);
+};
+
+//dairesel bağlantılı listenin başında bir düğüm eklemek için fonksiyon
+void Node::basaEkle(Node **root_ref, int data)
+{
+    Node *ptr1 = new Node();//Dinamik olarak bir düğüm oluşturulur
+    Node *temp = *root_ref;
+    ptr1->data = data;//Verilerin atanması
+    ptr1->next = *root_ref;
+
+    //Bagli liste NULL değilse, son düğümün bir sonraki öğesini ayarlayın
+    if (*root_ref != NULL){
+        while (temp->next != *root_ref)
+            temp = temp->next;
+        temp->next = ptr1;
+    }
+    else
+        ptr1->next = ptr1;//İlk düğüm için
+
+    *root_ref = ptr1;
+}
+
+void Node::yazdir(Node *root)//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    Node *temp = root;//dairesel bagli listede düğümlerin tekrarlanmaması için temp isimli düğümde root düğümü saklanır
+    if (root != NULL) {
+        do {
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        } while (temp != root);
+    }
+
+}
+
+void Node::dugumSil(Node **root, int silinecekDeger)
+{
+    if (*root == NULL)//liste boş ise return edilir
+        return;
+
+    if((*root)->data==silinecekDeger && (*root)->next==*root) {//listede bir tane düğüm varsa ve o düğümde silinecek düğüm ise
+        free(*root);//bellekten o düğümü siler
+        *root=NULL;//root'u temizler
+    }
+
+    Node *last=*root,*d;
+
+    if((*root)->data==silinecekDeger) {//silinecek düğüm root->data ise
+
+        while(last->next!=*root)//last isimli listeyi root kadar düğüm ekler
+            last=last->next;
+
+        last->next=(*root)->next;
+        free(*root);//root'u siler
+        *root=last->next;
+    }
+
+    while(last->next!=*root && last->next->data!=silinecekDeger) {
+        last=last->next;
+    }
+
+    if(last->next->data==silinecekDeger) {//last listesinin sonraki düğümünün datası silinecek düğüm ise
+        d=last->next;//listeyi doldurur
+        last->next=d->next;
+        free(d);////bellekten o düğümü siler
+    }
+    else//silinecek düğümü bulamaz
+        cout<<"Bulunamadi"<< endl;
+}
+
+int main()
+{
+    Node node;
+    Node *root = NULL;
+
+    node.basaEkle(&root, 2);//listenin başına 2,5,7,8,10 değerleri eklenir
+    node.basaEkle(&root, 5);
+    node.basaEkle(&root, 7);
+    node.basaEkle(&root, 8);
+    node.basaEkle(&root, 10);
+
+    cout << "Silmeden once liste:"<< endl;
+    node.yazdir(root);//bagli liste yazdırılır
+
+    node.dugumSil(&root, 7);//bağlı listeden 7 değeri silinir
+
+    cout << "\nSildikten sonra liste:"<< endl;
+    node.yazdir(root);//yeni oluşan bagli liste yazdırılır
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ Silmeden once liste:
+ 10 8 7 5 2 
+ Sildikten sonra liste:
+ 10 8 5 2
+ 
+ 
+=== Dairesel Bağlı Listedeki Düğüm Sayısı
+
+Örnek:7-dairesel_baglantili_listede_dugumlerin_sayisi
+
+Dairesel bağlı listedeki düğüm sayısını bulan program...
+
+[source,c++]
+----
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+    int dugumSayisi(Node *);
+};
+
+//dairesel bağlantılı listenin başında bir düğüm eklemek için fonksiyon
+void Node::basaEkle(Node **root_ref, int data)
+{
+    Node *ptr1 = new Node();//Dinamik olarak bir düğüm oluşturulur
+    Node *temp = *root_ref;
+    ptr1->data = data;//Verilerin atanması
+    ptr1->next = *root_ref;
+
+    //Bagli liste NULL değilse, son düğümün bir sonraki öğesini ayarlayın
+    if (*root_ref != NULL){
+        while (temp->next != *root_ref)
+            temp = temp->next;
+        temp->next = ptr1;
+    }
+    else
+        ptr1->next = ptr1;//İlk düğüm için
+
+    *root_ref = ptr1;
+}
+
+void Node::yazdir(Node *root)//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    Node *temp = root;//dairesel bagli listede düğümlerin tekrarlanmaması için temp isimli düğümde root düğümü saklanır
+    if (root != NULL) {
+        do {
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        } while (temp != root);
+    }
+}
+
+//listedeki düğümlerin sayısını veren fonksiyon
+int Node::dugumSayisi(Node *root)
+{
+    Node *temp = root;
+    int sonuc = 0;
+    if (root != NULL) {//root NULL olmadığı sürece tüm liste gezilerek(temp = temp->next ile) sonuc değişkeni arttırılır
+        do {
+            temp = temp->next;
+            sonuc++;//düğüm sayısını verir
+        } while (temp != root);
+    }
+    return sonuc;
+}
+
+
+int main()
+{
+    Node node;
+    Node *root = NULL;
+    node.basaEkle(&root, 12);//listenin başına 12,56,2,11 değerleri eklenir
+    node.basaEkle(&root, 56);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 11);
+
+    cout<< "Dairesel baglantili liste:"<< endl;
+    node.yazdir(root);//liste yazdırılır
+
+    cout<<"\nDugum sayisi= "<< node.dugumSayisi(root) << "  ";//dugumSayisi() fonksiyonu ile listedeki düğüm sayısı bulunur
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ Dairesel baglantili liste:
+ 11 2 56 12 
+ Dugum sayisi= 4 
+

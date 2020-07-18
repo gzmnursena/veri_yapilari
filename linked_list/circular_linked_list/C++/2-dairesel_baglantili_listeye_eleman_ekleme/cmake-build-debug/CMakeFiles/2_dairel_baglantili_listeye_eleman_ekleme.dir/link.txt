@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/2_dairel_baglantili_listeye_eleman_ekleme.dir/main.cpp.o  -o 2_dairel_baglantili_listeye_eleman_ekleme 

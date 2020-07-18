@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/graphs3_DFS.dir/main.cpp.o  -o graphs3_DFS 

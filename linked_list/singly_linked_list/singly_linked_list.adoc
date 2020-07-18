@@ -1,0 +1,1263 @@
+= Bağlantılı Liste Nedir?
+
+Bağlantılı liste, adı üzerinde aynı kümeye ait veri parçalarının birbirine, bellek üzerinde sanal olarak bağlanması ile
+oluşturulur; tüm veri, bir tren katarı gibi birbirine sanal bağlı parçalardan oluşur. Dolayısıyla, bağlantılı liste veri
+yapısında birisi *veri bloğu* diğeri *bağlantı bilgisi (link)* olmak üzere temelde iki kısım bulunur. Veri kısmında o uygulama için gerekli bir veya birkaç bilgi bulunabilir; işaretçi olarak adlandırılan bağlantı kısmında
+ise bağlantının nereye yapıldığını gösteren bir veya birkaç adres bilgisi bulunabilir.
+
+Bağlantılı listede en önemli anahtar sözcük veri parçalarının bir bağlantı bilgisi üzerinden sanal olarak birbirine
+bağlanmasıdır; genel olarak veri parçaları bellekte art arda sırada değil de farklı alanlarında bulunurlar. Dolayısıyla
+bağlantılı listedeki herhangi bir veri yapısına onun başlangıç adresi veya indisi bilinmediği sürece doğrudan erişim
+yapılamaz. Listenin başından başlayıp aynı bir tren katarındaki bir vagondan diğerine geçilmesi gibi veri parçaları
+üzerinden ilerlemesi gerekir. 
+
+Örneğin bağlantılı listenin onuncu veri parçasına erişmek için ondan önceki dokuz tane veri yapısı parçası üzerinden
+geçilmelidir. Bağlantılı liste veri modeli dinamik bellek kullanımı sunan önemli veri modellerinden birisidir.
+Dolayısıyla listedeki düğüm sayısı sistemin sahip olduğu bellek ile doğru orantılı olur.
+
+Bağlantılı liste veri modelinde bazı problemler doğrudan bu veri modeli dayanılarak çözülüp tasarlanırken bazı
+uygulamalar içinde bağlantılı listeler ara gereksinim olur. Örneğin verilerin belirli bir sırada tutulması,işlenmesi için
+sıraya koyulması, aradan kolayca çıkarılması ve sıraya kolayca eklenmesi vs gibi işlemler gerektiren uygulamalar
+yapılabilir. Bağlantılı listelerin zayıf yönü ise, liste üzerindeki ara elemanlara doğrudan erişilmemesi ve sık sık arama
+gerektiren uygulamalarda arama karmaşıklığının fazla olmasıdır.
+
+Eğer ara elemanlara doğrudan hızlı bir şekilde erişilmesi bekleniyorsa dizi, aramanın en az karmaşıklıkla yapılması
+bekleniyorsa sıralı ağaç veri modelleri kullanılmalıdır.
+
+Bağlantılı Listenin başı *ilk* adlı bir değişken tarafından tutulur; liste üzerinde işlem yapılırken başlangıç noktası bu
+değişkendir. Liste üzerindeki ara düğümlere doğrudan erişilemez; hep bu *ilk* adlı değişken üzerinden başlanmalıdır.
+Örneğin üçüncü düğüme erişilmek istenirse daha önce ilk düğüm düğümden ikincisine, ikinci düğğümden de üçüncü düğümün
+adresi öğrenilmelidir. Ancak üçüncü düğümün adresi elde edilmişse oradaki veriler kullanılabilir. Bağlantılı liste
+üzerinde bir verinin aranması için verinin liste üzerindeki sırası kadar döngü yapılması gerekir
+
+En kötü durum, listede olmayan bir verinin aranmasıdır; bu durumda listenin tüm elemanlarına bakılmalıdır ve n tane
+çevrim yapılması gerekir. Dolayısıyla bir bağlantılı liste üzerinde arama yapmanın maliyeti en kötü durumda O(n) olur.
+
+
+Eğer kullanılması programın çalışma süresi maliyetini iyileştirecekse veya program tasarımını kolaylaştırıyorsa bir de ek
+olarak listenin son elemanını gösteren *son* adlı bir değişken kullanılır. Böyle bir değişken kullanılması özellikle
+listeye ekleme yapılmasını kolaylaştırır. Eğer liste sırasız özellikle ise, yani yeni gelenler listenin sonuna
+ekleniyorsa doğrudan *son* tarafından işaret edilen elemanın arkasına eklenir. Bu durumda ekleme maliyeti O(1) olacaktır;
+aksi durumda eğer *son* değişkeni kullanılmasaydı listenin başından sonuna kadar dolaşılması gerekecekti ve bunun
+maliyeti de O(n) olacaktı yani ekleme maliyeti artacaktı
+
+= Bağlantılı Liste
+
+Bir küme elemanlarının birbirine bir bağlantısı bilgisi üzerinden bağlanmış liste yapısıdır. Yalın bir dizide elemanlar
+birbirini izleyen sırada bulunurlarken, bağlantılı listede her elemanın veri alanına ek olarak bir bağlantı alanı bulunur
+ve bu alanlara bir sonraki elemanın adres/indis bilgileri yazılır. Bağlantılı listede elemanları birbirini izleyen bellek
+adreslerinde veya dizi gözlerinde olmayıp listeye ekleme sırasındaki boş yere bağlıdır. Bağlantılı listeler dizi üzerinde
+tutulsalar dahi bağlantı bilgisi gerekmektedir.
+
+= Liste Uzunluğu
+
+Listedeki art arda bağlı elemanların/düğümlerin sayısıdır. Eğer eleman sayısı sıfır ise boş liste olarak adlandırılır ve
+{} ile gösterilir.
+
+
+= Alt Liste
+
+Listenin, genel özellikleri aynı kalmak koşuluyla üzerinde hareket edilebilecek belirli bir parçasıdır. Boş liste de bir alt-liste olup uzunluğu sıfırdır.
+
+= Tek Yönlü Bağlantılı Liste (Singly Linked List)
+
+image::images/tek_yonlu.png[]
+
+Düğümler arasında şekilde gösterildiği gibi tek yönlü
+bağlantı vardır; bu durumda listenin başından sonuna
+doğru hareket edilebilir. Liste üzerindeki işlemler listenin
+başından başlar. Ekleme, arama, listeleme gibi
+işlemlerin karmaşıklığı O(n) olur. Listenin tutulması
+için iki tane işaretçi kullanılırsa ekleme
+karmaşıklığı O(1), arama ve listeme karmaşıklığı da 
+O(n) olur.
+
+Tek yönlü bağlı listelerde kodlama yapabilmek için;
+
+Örnek: 1-create_linked_list
+
+[source, c++]
+----
+class Node {
+public:
+    int data;
+    Node *next;
+};
+----
+yukarıda kodda bir düğüm oluşturulur. Bu düğüm üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi tutulur.
+
+
+[source , c++]
+----
+    Node *root1 = NULL;
+    Node *root2 = NULL;
+    Node *root3 = NULL;
+
+    root1 = new Node();
+    root2 = new Node();
+    root3 = new Node();
+
+    root1->data = 1;
+    root1->next = root2;
+
+    root2->data = 2;
+    root2->next = root3;
+
+    root3->data = 3;
+    root3->next = NULL;
+    
+    while (node != NULL) {
+        cout << node->data << "  ";
+        node = node->next;
+    }
+----
+
+yukarıdaki kodda üç tane kök düğüm oluşturulur. Kök düğümlerin datasına değerleri yazılır. Düğümün sonraki işaretçisi belirlenir. root2 ve root3 düğümleri içinde aynı işlemler uygulanır. Daha sonra bir döngü ile düğümün son elemanına kadar gidilerek bağlı listenin içerisindeki elemanlar ekrana yazdırılır.
+
+Yazdırma işlemini dinamik bir şekilde yapmak için döngü kullanmak daha mantıklıdır.
+
+[source, c++]
+----
+     Node *iter=root1;
+     
+     while(iter!=NULL){
+        cout<<iter->data<<"  ";
+        iter=iter->next;
+    }
+}
+----
+Yukarıdaki kodun düzenli hali:
+
+=== Bağlı Liste Oluşturma
+
+Örnek:1-create_linked_list
+
+Bağlı liste oluşturma...
+
+[source,c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node { //bir düğüm oluşturulur. Bu düğüm üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve metotlar tutulur.
+public:
+    int data;
+    Node* next;
+    void yazdir(Node *);
+};
+
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    //Düğüm ile root oluşturma:
+    Node *root1 = NULL;//3 tane root tanımlandı ve şimdilik biryeri işeret etmiyorlar
+    Node *root2 = NULL;
+    Node *root3 = NULL;
+
+    root1 = new Node();//root'lar için bellekten yer ayrıldı
+    root2 = new Node();
+    root3 = new Node();
+
+    root1->data = 1;//root1'in datasına değer atandı
+    root1->next = root2;//root1'in next'i artık root2'yi işaret ediyor
+
+    root2->data = 2;//root2'nin datasına değer atandı
+    root2->next = root3;//root2'nin next'i artık root3'ü işaret ediyor
+
+    root3->data = 3;//root3'ün datasına değer atandı
+    root3->next = NULL;//bir daha değer ataması yapılmadığı için son root'un next'i NULL'dur
+
+    Node nesne;
+    nesne.yazdir(root1);//oluşturulan düğüm Node sınıfından nesne oluşturularak yazdir() metodu ile yazdırılır
+
+
+    cout<<endl;
+    cout<<root1->data<<"  ";
+    cout<<root1->next->data<<"  ";
+    cout<<root1->next->next->data<<endl;
+    //düğümü yazdırırken başlangıç root'unun datasını yazdırıp daha sonra root'un sonraki düğümünün datasını yazdırabiliriz
+
+    Node *iter=root1;//yada başlangıç root'unu(root1) iter adında bir Node tipindeki değişkene atarak
+    while(iter!=NULL){//son düğüme kadar
+        cout<<iter->data<<"  ";//iter'in datasını yazdırabiliriz
+        iter=iter->next;//iter'i her yazdırdığımızda next ile sonraki düğümü işaret etmemiz gerekir
+    }
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+ 
+ 1  2  3  
+ 1  2  3
+ 1  2  3  
+
+== Tek Yönlü Bağlantılı Liste Veri Ekleme
+
+Tek yönlü bağlı listeye veri ekleme işlemi 3 şekilde yapılabilir.
+
+Örnek: 2-insert_linked_list
+
+=== 1- Başa Ekleme
+
+[source, c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+    node.basaEkle(&root, 7);//düğümün başına sırasıyla 7,1,8 değerleri eklenir
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root,8);
+    node.yazdir(root);//düğüm yazdırılır
+    return 0;
+}
+
+----
+
+Ekran Çıktısı:
+
+ 8  1  7  
+
+
+--  Listenin başına veri eklemek için bir tane düğüm oluşturulur. 
+
+-- Oluşturulan düğümün datasına gelen veri atar.
+
+-- Yeni düğümün next'ini kök olarak atar.
+
+-- Kökü yeni düğümün işaretçisi olarak atar.
+
+
+=== 2- Araya (Düğümden Sonra) Ekleme
+
+--  Listenin ortasına veri eklemek için bir tane düğüm oluşturulur.
+
+-- Oluşturulan düğümün datasına gelen veri atar.
+
+-- Bağlı listedeki düğüm koparak yeni düğüm koparılan yere bağlanır ve datası atanır.
+
+
+=== 3- Sona Ekleme
+
+[source, c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    void sonaEkle(Node **, int );
+    void yazdir(Node *);
+};
+
+void Node::sonaEkle(Node **root_ref, int new_data){
+
+    Node* new_node = new Node();//Listenin sonuna veri eklemek için bir tane düğüm oluşturulur. (new_node)
+
+    Node *last = *root_ref;//Bir düğüm daha oluşturulur ve buna kök düğümün işaretçisi atanır. (last)
+
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır.
+
+    new_node->next = NULL;//Düğümün sonraki işaretçisi NULL olarak gösterilir.
+
+    if (*root_ref == NULL){
+        *root_ref = new_node;//Eğer kök düğümün işaretçisi NULL'u gösteriyorsa yeni oluşturulan düğüm kök düğüme atanır.
+        return;
+    }
+
+    while (last->next != NULL)//Bir döngü ile son eleman bulunur.
+        last = last->next;
+
+    last->next = new_node;//son düğüme yeni oluşturlan düğüm atanır
+    return;
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.sonaEkle(&root, 4);//node nesnesi ile sonaEkle() fonksiyonu çağırılarak root'un sonuna 4,5,6,22 değerleri eklenir
+    node.sonaEkle(&root, 5);
+    node.sonaEkle(&root, 6);
+    node.sonaEkle(&root, 22);
+    node.yazdir(root);//düğüm yazdırılır
+    return 0;
+}
+
+----
+
+Ekran Çıktısı:
+ 
+ 4  5  6  22
+
+-- Listenin sonuna veri eklemek için bir tane düğüm oluşturulur. (new_node)
+
+-- Bir düğüm daha oluşturulur ve buna kök düğümün işaretçisi atanır. (last)
+
+-- Oluşturulan düğümün datasına gelen veri atanır.
+
+-- Düğümün sonraki işaretçisi NULL olarak gösterilir.
+
+-- Eğer kök düğümün işaretçisi NULL ı gösteriyorsa yeni oluşturulan düğüm kök düğüme atanır.
+
+-- Bir döngü ile son eleman bulunur ve son düğüme yeni oluşturlan düğüm atanır.
+
+=== Listeye Düğüm Ekleme
+
+Örneğin; 2-insert_linked_list
+
+Listenin başına,sonuna ve araya düğüm ekleme...
+
+[source,c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonları tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    void dugumdenSonraEkle(Node *,int);
+    void sonaEkle(Node **, int);
+    void yazdir(Node *);
+
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+
+void Node::dugumdenSonraEkle(Node *gelen_node, int new_data){
+
+    if (gelen_node == NULL){//gelen düğümün bağlanacağı önceki düğümün boş olmaması gerektiği için kontrol yapılır
+        cout<<"Önceki düğüm NULL olamaz";
+        return;
+    }
+
+    Node *yeni_node = new Node();//Listenin ortasına veri eklemek için bir tane düğüm oluşturulur.
+
+    yeni_node->data = new_data;// Oluşturulan düğümün datasına gelen veri atar.
+
+    yeni_node->next = gelen_node->next;
+
+    gelen_node->next = yeni_node;
+    //Bağlı listedeki düğüm koparak yeni düğüm koparılan yere bağlanır ve datası atanır.
+}
+
+void Node::sonaEkle(Node **root_ref, int new_data){
+
+    Node* new_node = new Node();//Listenin sonuna veri eklemek için bir tane düğüm oluşturulur. (new_node)
+
+    Node *last = *root_ref;//Bir düğüm daha oluşturulur ve buna kök düğümün işaretçisi atanır. (last)
+
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır.
+
+   new_node->next = NULL;//Düğümün sonraki işaretçisi NULL olarak gösterilir.
+
+    if (*root_ref == NULL){
+        *root_ref = new_node;//Eğer kök düğümün işaretçisi NULL'u gösteriyorsa yeni oluşturulan düğüm kök düğüme atanır.
+        return;
+    }
+
+    while (last->next != NULL)//Bir döngü ile son eleman bulunur.
+        last = last->next;
+
+    last->next = new_node;//son düğüme yeni oluşturlan düğüm atanır
+    return;
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.basaEkle(&root, 7);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 7,1,8 değerleri eklenir
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root,8);
+
+    node.sonaEkle(&root, 4);//node' nesnesi ile sonaEkle() fonksiyonu çağırılarak root'un sonuna 4,5,6,22 değerleri eklenir
+    node.sonaEkle(&root, 5);
+    node.sonaEkle(&root, 6);
+    node.sonaEkle(&root, 22);
+
+    node.dugumdenSonraEkle(root->next, 900);//root'un next'inin işaret ettiği düğüme 900
+    node.dugumdenSonraEkle(root->next->next, 100);//root'un next->next'inin işaret ettiği düğüme 100 değerleri eklenir
+    node.dugumdenSonraEkle(root->next->next->next, 800);
+    node.dugumdenSonraEkle(root->next->next->next->next, 300);
+
+    node.yazdir(root);//düğüm yazdırılır
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+ 
+ 8  1  900  100  800  300  7  4  5  6  22
+
+
+== Tek Yönlü Bağlantılı Liste Silme
+
+=== Parametre Olarak Verilen Elemanı Silme
+
+Örnek: 3-verilen_elemani_silme
+
+Listeden parametre olarak verilen düğümü silme...
+
+[source, c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using  namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **,int);
+    void deleteNode(Node **,int);
+    void yazdir(Node *);
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+void deleteNode(Node **root_ref, int key)
+{
+    Node* temp = *root_ref, *prev;
+
+    if (temp != NULL && temp->data == key)//Eğer varsa
+    {
+        *root_ref = temp->next;//düğümün başında bulunan kök düğüme temp bağlanır
+        free(temp);//bağlı listeden eleman çıkarılır. [ free(temp) ]
+        return;
+    }
+
+    while (temp != NULL && temp->data != key)//Aranan eleman tüm bağlı listede aranır. [ while döngüsü ile ]
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) return;
+
+    //döngü sonrasında temp NULL değilse
+    prev->next = temp->next; // düğümler koparılan yerden bağlanır.[ prev->next = temp->next; ]
+    free(temp);//bağlı listeden eleman çıkarılır. [ free(temp) ]
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.basaEkle(&root, 7);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 7,1,3,2 değerleri eklenir
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root, 3);
+    node.basaEkle(&root, 2);
+
+    cout<<"Oluşturulan Linked List:"<<endl;
+    node.yazdir(root);//oluşturulan bağlı liste yazdırılır
+    deleteNode(&root, 1);//düğümdeki 1 değeri silinir
+    cout<<"\nYeni Linked List:"<<endl;
+    node.yazdir(root);//yeni bağlı liste yazdırılır
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ Oluşturulan Linked List:
+ 2  3  1  7  
+ Yeni Linked List:
+ 2  3  7  
+ 
+ 
+-- Aranan eleman tüm bağlı listede aranır. [ while döngüsü ile ]
+
+-- Eğer varsa listeden çıkarılır. [ free(temp) ]
+
+-- Daha sonra düğümler koparılan yerden bağlanır.[ prev->next = temp->next; ]
+
+
+=== İndekse Göre Silme
+
+Örnek: 4-indekse_gore_silme
+
+Listedeki düğümü indekse göre silme...
+
+[source, c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using  namespace std;
+
+class Node{//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **,int);
+    void deleteNode(Node **,int);
+    void yazdir(Node *);
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+void Node::deleteNode(Node **root_ref, int index)
+{
+   if (*root_ref == NULL)
+      return;
+
+    Node *temp = *root_ref;
+
+    if (index == 0)//bağlı listeden kök(root) silinecek ise(0.index)
+    {
+        *root_ref = temp->next;//düğümün kök işaretçi bir sonraki düğüm olur
+        free(temp);//kök işaretçi free yapılıp return edilir.
+        return;
+    }
+
+    //silinecek index 0'dan farklı ise Node sınıfından *temp tipindeki değişkene root_ref'teki tüm değerler atılır
+    for (int i=0; temp!=NULL && i<index-1; i++)
+         temp = temp->next;
+
+    //bağlı liste boş ise deleteNode() fonksiyonundan çıkar
+    if (temp == NULL || temp->next == NULL)
+         return;
+
+    //bağlı liste boş değilse ve silinecek index 0 değilse;
+    Node *next = temp->next->next;
+
+    free(temp->next);//indekse eşit olan elemanın işaretçisi free yapılıp return edilir
+
+    temp->next = next;
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.basaEkle(&root, 7);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 7,1,3,2,8 değerleri eklenir
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root, 3);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 8);
+
+    cout<<"Oluşturulan Linked List:"<<endl;
+    node.yazdir(root);//oluşturulan bağlı liste yazdırılır
+    node.deleteNode(&root, 3);//deleteNode(&root, 3) fonksiyonu başlangıç adresi verilen düğümdeki 3. ve 0. indexteki elemanları siler
+    node.deleteNode(&root, 0);
+    cout<<"\nYeni Linked List:"<<endl;
+    node.yazdir(root);//yeni bağlı liste yazdırılır
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ Oluşturulan Linked List:
+ 8  2  3  1  7  
+ Yeni Linked List:
+ 2  3  7  
+ 
+
+-- Listenin indeksi sıfır ise kök işaretçi free yapılıp return edilir.
+
+-- Bağlı listenin içerisinde döngü ile dolaşarak indekse eşit olan elemanın işaretçisi free yapılıp return edilir.
+
+
+
+=== Tek Yönlü Bağlı Listeyi Silme
+
+Örnek: 5-remove_linked_list
+
+Tek yönlü bağlı listeyi silme...
+
+[source, c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using  namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void deleteList(Node**);
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+};
+
+void Node::deleteList(Node** root_ref)
+{
+    Node *current = *root_ref;
+    Node *next;
+
+    while (current != NULL) {//while döngüsü ile tüm bağlı liste üzerinde dolaşılır
+        next = current->next;
+        free(current);
+        current = next;//sonraki düğümlere gidilerek teker teker tüm düğümler free edilir
+    }
+    *root_ref = NULL;//kök düğümünde silinmesi için NULL atanır
+}
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    //1->12->1->4->1
+    node.basaEkle(&root, 1);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 1,4,1,12,1 değerleri eklenir
+    node.basaEkle(&root, 4);
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root, 12);
+    node.basaEkle(&root, 1);
+    node.yazdir(root);//oluşturulan bağlı liste yazdırılır
+
+    cout << "\nDeleting linked list";
+    node.deleteList(&root);//bağlı liste silinir
+    node.yazdir(root);//yeni bağlı liste yazdırılır
+
+    cout << "\nLinked list deleted";
+}
+----
+
+Ekran Çıktısı:
+
+ 1  12  1  4  1  
+ Deleting linked list
+ Linked list deleted
+
+-- Döngü ile tüm düğümler dolaşılarak free yapılır.
+
+
+== Tek Yönlü Bağlı Listede Arama
+
+=== Eleman Arama
+
+Örnek: 7-search_linked_list
+
+Bağlı listede düğüm arama...
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    bool ara(Node *, int);
+    void yazdir(Node *);
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+bool Node::ara(Node *root, int aranan)
+{
+    while (root != NULL) {
+        if (root->data == aranan)//eğer root'ta tutulan veri aranan değere eşit ise
+            return true;//true döndür
+        root = root->next;//eşit değilse bir sonraki düğüme geç
+    }
+    return false;//aranan değer bağlı listede yoksa false döndür
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+    int arananDeger = 11;
+
+    node.basaEkle(&root, 10);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 10,30,11,21,14 değerleri eklenir
+    node.basaEkle(&root, 30);
+    node.basaEkle(&root, 11);
+    node.basaEkle(&root, 21);
+    node.basaEkle(&root, 14);
+    node.yazdir(root);//bağlı liste yazdırılır
+
+    node.ara(root, arananDeger)? cout<<"\nAranan deger "<< arananDeger <<" : Listede vardir" : cout<<"\nAranan deger "<< arananDeger <<": Listede yoktur";
+   // ara() fonksiyonuna aranacak olan değer gönderilip true ise var false ise yok olarak mesaj yazdırılır
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 14  21  11  30  10  
+ Aranan deger 11 : Listede vardir
+
+-- Döngü ile bağlı liste dolaşılarak kök işaretçisinin datası aranan elemana eşit mi kontrolü yapılır ve döngüde root = root->next; ile kökün sonraki elemanına geçiş yapılır.
+
+
+=== İndekse Göre Arama
+
+Örnek: 8-arama_index
+
+Bağlı listede indekse göre eleman arama...
+
+[source, c++]
+----
+#include <iostream>
+#include<stdlib.h>
+#include <assert.h>
+using namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    int arananIndex(Node *, int);
+    void yazdir(Node *);
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+int arananIndex(Node *root, int index)
+{
+    int sayac = 0;//döndürülecek index sayac değişkeninde tutulur
+    while (root != NULL)
+    {
+        if (sayac == index)
+            return(root->data);//sayac değişkeni aranan index değerine eşit ise düğümdeki veriyi return eder
+        sayac++;//sayac değişkeni aranan index değerine eşit değilse sayac döngü her döndüğünde arttırılır
+        root = root->next;//root'ta bir sonraki düğümü gösterir
+    }
+    assert(0); // aranan index yoksa ekrana hata mesajını yazar.
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+    int index=1;//aranacak olan index
+    int index2=5;
+
+    node.basaEkle(&root, 5);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 5,4,3,2,1 değerleri eklenir
+    node.basaEkle(&root, 4);
+    node.basaEkle(&root, 3);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 1);
+    cout<<"Bağlı Liste"<<endl;
+    node.yazdir(root);//oluşturulan linked list yazdırılır
+
+    cout << "\n"<< index <<". indexteki eleman= " << arananIndex(root, index);
+    cout << "\n"<< index2 <<". indexteki eleman= " << arananIndex(root, index2);
+    //aranan index var ise o indexteki elemanı yazar yok ise assert(0); ile hata mesajı verir
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ Bağlı Liste
+ 1  2  3  4  5  
+ 1. indexteki eleman= 29_arama_index: /home/asli/Documents/boost_calismalar/veri_yapilari/linked_list/singly_linked_list/C++/8-arama_index/main.cpp:33: int arananIndex(Node*, int): Assertion `0' failed.
+
+ 
+
+-- Döngü ile bağlı liste dolaşılarak aranan index sayaca eşit mi kontrolu yapılır ve döngüde root = root->next; ile kökün sonraki elemanına geçiş yapılarak sayac değişkeni bir artırılır.
+
+=== Tek Yönlü Bağlantılı Listede Düğüm Sayısını Bulma
+
+Örnek: 6-dugum_sayisi
+
+Listedeki düğüm sayısını bulma...
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Node//bir sınıf oluşturulur. Bu sınıf üzerinde data ve düğümün sonraki elemanlarını gösteren bir işaretçi ve fonksiyonlar tutulur.
+{
+public:
+    int data;
+    Node *next;
+    void basaEkle(Node **, int);
+    int dugumSayisi(Node *);
+    void yazdir(Node *);
+};
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+int Node::dugumSayisi(Node *node)
+{
+    int sayac = 0;
+    while (node != NULL) {//bir döngü ile tüm baglı liste dolaşılır
+        sayac++;
+        node = node->next;//bir sonraki düğüme gidilerek sayac arttılır
+    }
+    return sayac;//düğüm sayısını veren sayac değişkeni return edilir
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.basaEkle(&root, 1);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 1,3,1,2,1 değerleri eklenir
+    node.basaEkle(&root, 3);
+    node.basaEkle(&root, 1);
+    node.basaEkle(&root, 2);
+    node.basaEkle(&root, 1);
+    node.yazdir(root);//bağlı liste yazdırılır
+
+    cout<<"\nDügüm sayisi: "<< node.dugumSayisi(root);//dugumSayisi() fonksiyonu ile bağlı listedeki düğüm sayısı bulunur
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 1  2  1  3  1  
+ Dügüm sayisi: 5
+ 
+ 
+-- Bir sayac değişkeni alınır ve döngü ile bağlı listenin sonuna kadar gidilerek (node = node->next;) sayac değişkeni bir artırılır.
+
+=== Listedeki Sıralı-Tekrarlı Düğümleri Silme
+
+Örnek: 9-sirali_tekrarli_verileri_sil
+
+Listedeki sıralı-tekrarlı düğümleri silme...
+
+[source,c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    void removeDuplicates(Node *);
+    void basaEkle(Node **, int);
+    void yazdir(Node *);
+};
+
+void Node::removeDuplicates(Node *root)
+{
+    Node *next_next;
+
+    if (root == NULL)//düğüm boş ise
+        return;
+
+    while (root->next != NULL)
+    {
+        if (root->data == root->next->data)//düğüm ile sonraki elemanı aynı ise
+        {
+            //Düğümü kopartılarak kök işaretçisi sonraki düğümü işaret eder
+            next_next = root->next->next;
+            free(root->next);
+            root->next = next_next;
+        }
+        else//düğüm ile sonraki elemanı aynı değil ise
+        {
+            root = root->next;//kök işaretçisi sonraki düğümü işaret eder
+        }
+    }
+}
+
+void Node::basaEkle(Node **root_ref, int new_data){
+    Node* new_node = new Node();//Düğüm oluşturulur
+    new_node->data = new_data;//Oluşturulan düğümün datasına gelen veri atanır
+    new_node->next = (*root_ref);//Yeni düğümün next'ini kök olarak atar.
+    (*root_ref) = new_node;//Kökü yeni düğümün işaretçisi olarak atar
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+int main()
+{
+    Node node;//fonksiyonları çağırmak için bir nesne oluşturulur
+    Node *root = NULL;//düğüm oluşturulur
+
+    node.basaEkle(&root, 20);//node nesnesi ile basaEkle() fonksiyonu çağırılarak root'un başına 20,13,13,11,11,11 değerleri eklenir
+    node.basaEkle(&root, 13);
+    node.basaEkle(&root, 13);
+    node.basaEkle(&root, 11);
+    node.basaEkle(&root, 11);
+    node.basaEkle(&root, 11);
+
+    cout<<"Bağlı Liste:\n";
+    node.yazdir(root);//bağlı liste yazdırılır
+
+    node.removeDuplicates(root);//bağlı listedeki tekrar eden düğümlerdeki değerleri silmek için removeDuplicates() fonksiyonu çağırılır
+
+    cout<<"\nYeni Bağlı Liste:\n";
+    node.yazdir(root);//yeni bağlı liste yazdırılır
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ Bağlı Liste:
+ 11  11  11  13  13  20  
+ Yeni Bağlı Liste:
+ 11  13  20 
+ 
+=== Listedeki Sıralanmamış-Tekrarlı Düğümleri Silme
+ 
+Örnek:10-siralanmamis_tekrarli_verileri_sil
+
+Listedeki sıralanmamış-tekrarlı düğümleri silme
+
+[source,c++]
+----
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    void removeDuplicates(Node *);
+    void yazdir(Node *);
+    Node *newNode(int);
+};
+
+Node  *Node::newNode(int data)
+{
+    Node *temp = new Node;
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+void Node::removeDuplicates(Node *root)
+{
+    Node *ptr, *dup;
+
+    while (root != NULL && root->next != NULL)
+    {
+        ptr = root;//oluşturulan ptr düğümüne root düğümünü atıyor
+
+        while (ptr->next != NULL)
+        {
+            if (root->data == ptr->next->data)//eğer root düğümünün verisi ile ptr düğümünün sonraki elemanının verisi aynı ise
+            {
+                dup = ptr->next;//ptr düğümündeki elemanları dup isimli düğümde tutar
+                ptr->next = ptr->next->next;//ptr düğümünü kopartıp ptr->next->next 'teki değeri ptr->next'e ekler
+                delete(dup);//ptr->next; 'teki değeri siler
+            }
+            else
+                ptr = ptr->next;//eğer root düğümünün verisi ile ptr düğümünün sonraki elemanının verisi aynı değilse düğümü ilerletir
+        }
+        root = root->next;
+    }
+}
+
+void Node::yazdir(Node *node) //yazdir() metodu ile düğümün tüm elemanları yazdırılır
+{
+    while (node != NULL) {
+        cout << node->data << "  ";//düğümdeki veriyi yazdırır
+        node = node->next;//kök işaretçisi sonraki düğümü işaret eder
+    }
+}
+
+int main()
+{
+    //10->12->11->11->12->11->10
+    Node node;
+    Node *root = node.newNode(10);//düğüme sırasıyla 10,12,11,11,12,11,10 değerlerini ekler
+    root->next = node.newNode(12);
+    root->next->next = node.newNode(11);
+    root->next->next->next = node.newNode(11);
+    root->next->next->next->next = node.newNode(12);
+    root->next->next->next->next->next =node.newNode(11);
+    root->next->next->next->next->next->next =node.newNode(10);
+
+    cout<<"Bağlantılı Liste:\n";
+    node.yazdir(root);//bağlı listeyi yazdırır
+
+    node.removeDuplicates(root);//sıralanmamış bağlı listeden tekrarlı elemanları siler
+
+    cout<<"\nYeni Bağlantılı Liste:\n";
+    node.yazdir(root);//bağlı listenin son halini yazdırır
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ Bağlantılı Liste:
+ 10  12  11  11  12  11  10  
+ Yeni Bağlantılı Liste:
+ 10  12  11  
+ 
+
+=== Listeyi Ters Çevirme
+
+Örnek:11-baglantili_listeyi_ters_cevir
+
+Listenin tersini bulan program...
+
+[source,c++]
+----
+#include <iostream>
+#include<stdlib.h>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int data)//constructor
+    {
+        this->data = data;
+        next = NULL;
+    }
+};
+
+struct LinkedList {
+    Node *root;
+    LinkedList()
+    {
+        root = NULL;
+    }
+
+    void tersCevir()
+    {
+        Node *kok = root;
+        Node *onceki = NULL, *sonraki = NULL;
+
+        while (kok != NULL) {//son eleman ile bir önceki elemanın yerlerini değiştirerek bağlı listeyi tamamlar.
+            sonraki = kok->next;
+
+            kok->next = onceki;
+
+            onceki = kok;
+            kok = sonraki;
+        }
+        root = onceki;
+    }
+
+    void yazdir()//yazdir() metodu ile düğümün tüm elemanları yazdırılır
+    {
+        Node* temp = root;
+        while (temp != NULL) {
+            cout << temp->data << " ";//düğümdeki veriyi yazdırır
+            temp = temp->next;//kök işaretçisi sonraki düğümü işaret eder
+        }
+    }
+
+    void basaEkle(int data)
+    {
+        Node* temp = new Node(data);//Düğüm oluşturulur
+        temp->next = root;//Oluşturulan düğümüe root'u atar
+        root = temp;//Kökü yeni düğümün işaretçisi olarak atar
+    }
+};
+
+
+int main()
+{
+    LinkedList liste;
+    liste.basaEkle(20);//listenin başına 20,4,15,85 değerleri ekler
+    liste.basaEkle(4);
+    liste.basaEkle(15);
+    liste.basaEkle(85);
+
+    cout << "Bağlantılı Liste:\n";
+    liste.yazdir();//bağlantılı listeyi yazdırır
+
+    liste.tersCevir();//tersCevir() metodunu çağırır
+
+    cout << "\nTers Bağlantılı Liste:\n";
+    liste.yazdir();
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+ 
+ Bağlantılı Liste:
+ 85 15 4 20 
+ Ters Bağlantılı Liste:
+ 20 4 15 85 

@@ -1,0 +1,79 @@
+= Free List
+:toc:
+
+Freelist, bir çeşit kaynağı verimli bir şekilde elde etmenin bir yoludur. Bellek ayırma gerektiğinde genellikle bir freelist kullanılır, ancak boş bir blok aramak hızlı olmalıdır. Freelistler genel amaçlı ayırıcıların içinde kullanılabilir veya doğrudan optimize edilmiş bir algoritmaya gömülebilir.
+
+Örneğin her bir öğenin 16 bayt bellek olduğu bir dizi öğemiz olduğunu varsayalım. Dizimizin 32 elemanı var. Dizilerde bulunan programın 16 bayt eleman istemesi, kullanması ve daha sonra geri vermesi gerekir; Elemanların tahsisi ve elemanların yeniden konumlandırılması var.
+
+Elemanların tahsis edilme sırası hiçbir şekilde tahsisat sırası ile ilişkili değildir. Yeniden konumlandırmanın hızlı bir işlem olması için, 16 bayt elemanın, ileride tahsis edilecek bu elemanın yeniden kullanılabilmesi için bir durumda olması gerekir.
+
+Kullanılmayan ve serbest tüm öğeleri tutmak için tek bağlantılı bir liste kullanılabilir. Öğelerin her biri 16 bayt olduğu için, bu, serbest listenin sonraki bloğuna işaret eden bir işaretçi veya tamsayı dizinini depolamak için yeterli bellektir. Boş listenin sonunu belirtmek için null işaretçiyi veya -1 dizinini kullanabiliriz.
+
+
+
+.Örneğin;
+
+Bellekte yer ayırma aşağıdaki gibi yapılabilir:
+
+[source c++]
+----
+struct Memory
+{
+    // Tam sayı dizini veya daha karmaşık tutamaç(handle) olabilir
+    struct Element
+    {
+        Element* next;
+    };
+ 
+    void* memory;
+    Element* freeList;
+ 
+    void* Alloc( )
+    {
+        if ( freeList )
+        {
+            Element* e = freeList;
+            freeList = freeList->next;
+            return e;
+        }
+ 
+        return NULL;
+    }
+ 
+    void Free( void* element )
+    {
+        freeList->next = element;
+        freeList = element;
+    }
+}
+---- 
+
+Belleğin * ile ayarlanması biraz zaman alacaktır. Her öğenin, bir işaretçi veya tamsayı dizini gibi bir şekilde birbirine bağlanması gerekir. Daha fazla öğe mevcut değilse, 32 boyutundan daha fazla dizi tahsis edilebilir - bu, belleğimizin, her dizinin bir sayfa olarak düşünülebileceği bir **paged allocator(sayfalanmış ayırıcı)** stiliyle yönetildiği anlamına gelir.
+
+Freelist, daha karmaşık algoritmalara özel olarak yerleştirilebilen önemli bir kavramdır. Çoğu zaman, küçük yazılım parçalarının genellikle sadece bir veya iki işlev olan çok küçük bir C benzeri arayüz ortaya çıkarması önemlidir. Bu yazılımların kendi iç freelistlerini kendi içinde bulundurması, basit bir arayüz elde etmenin bir yoludur.
+
+
+Örneğin, bir nokta kümesinin dışbükey gövdesini **Quick Hull algoritmasıyla** hesapladığımızı varsayalım. Varsayımsal algoritma şöyle bir arayüz ortaya koyar:
+
+[source c++]
+----
+struct Vec3
+{
+    float x;
+    float y;
+    float z;
+}
+ 
+// Algoritmayı çalıştırmak için gerekli bayt sayısını hesaplar
+int ComputeMemoryBound( int vertCount );
+ 
+// Bellek kullanıcı tarafından tahsis edilen boş alanın ComputeMemoryBound (n) baytını gösterir
+// Belleğe yazılan Vec2s dizisi çıktı olarak Vec2s sayısını döndürür
+int QHull( Vec3* points, int vertCount, void* memory );
+----
+
+
+Bu QHull fonksiyonu açık bellek ayırma işlemi yapmaz ve kullanıcıyı çalışmak için uygun miktarda bellek ayırmaya zorlar. Bu belleğin sınırları (algoritmanın en kötü senaryosu için ne kadar büyük olması gerektiği) ComputeMemoryBound fonksiyonu tarafından hesaplanır.
+
+QHull'un içinde genellikle gövde genişletilir ve birçok yeni yüz tahsis edilir. Bu yüzler ücretsiz bir listede tutulur. Yeni yüzler oluşturulduktan sonra eskileri silinir. Silinen bu yüzler freelist'e gönderilir. Bu, algoritma sonuçlanıncaya kadar devam eder ve kullanıcının freelist'in gömülü bellek yönetiminin ayrıntıları hakkında bilgi sahibi olması gerekmez.
+

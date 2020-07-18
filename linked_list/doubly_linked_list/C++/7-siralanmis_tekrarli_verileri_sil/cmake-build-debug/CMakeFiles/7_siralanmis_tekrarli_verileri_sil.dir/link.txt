@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/7_siralanmis_tekrarli_verileri_sil.dir/main.cpp.o  -o 7_siralanmis_tekrarli_verileri_sil 

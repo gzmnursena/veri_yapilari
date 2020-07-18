@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/skip_list1.dir/main.cpp.o  -o skip_list1 

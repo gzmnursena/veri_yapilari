@@ -1,0 +1,99 @@
+= ArrayList
+
+ArrayList ler 90'lı yılların sonlarından beri programcılar tarafından kullanılmaktadır. Dizilerden daha esnektir. Java, C # ve C ++ gibi birçok programlama dilinde uygulanır. ArrayLists , çeşitli veri türlerini depolamak için kullanılabilen bir koleksiyon türüdür. Bu, string ve integer gibi iki farklı sınıfın tek bir koleksiyonda birlikte depolanabileceği anlamına gelir. ArrayLists'in hem avantajları hem de dezavantajları vardır .
+
+Bir ArrayList dinamik boyutlandırılır ve tamsayı indeksleme erişilebilir nesnelerin esnek listesidir. Çok boyutlu bir dizi dışında birçok değişken türünü saklayabilir. Buna **null** değerler de dahildir. Maalesef ArrayLists , dizilere ve genel listelere göre verimsizdir. **ArrayList türleri güvenli değildir ve bu nedenle kutu içine alınmalı ve kutudan çıkarılmalıdır, aksi takdirde çalışma zamanında bir hata oluşur.** **ArrayList'ler varsayılan olarak iş parçacığı için güvenli değildir.**
+
+ArrayList kullanırken tip güvenliği ve düşük performans eksikliği nedeniyle C ++ 'da yıllar içinde **List <T>** veya **List <Object>** kullanılarak değiştirildi. Genel Listeler, ArrayList ile aynı faydalara sahiptir . Genel Listeler tür güvenlidir ve bu nedenle daha güvenilir, daha hatasız ve kullanılması önerilir. ArrayList ler yalnızca mevcut eski kod tabanlarıyla kullanılmalıdır.
+
+
+== ArrayList Özellikleri
+
+**Capacity:** ArrayList'in kaç elemanı depolayabileceğini gösterir.
+
+ 
+**Count:** ArrayList'in eleman sayısını verir.
+
+**IsFixedSize:** ArrayList'in sabit bir boyutu var mı?
+
+**IsReadOnly:** ArrayList salt okunur mu?
+
+**IsSynchronized:** ArrayList iş parçacığı için güvenli mi?
+
+**Item[Integer]:** Dizinde verilen ArrayList elemanları.
+
+**SyncRoot:** ArrayList'in senkronize edilmiş bir değerini saklamak için kullanılır.
+
+
+== ArrayList Fonksiyonları
+
+
+**Adapter(IList^):** Bir nesneyi, IList ^ arabirimine bir ArrayList olarak sarar.
+
+
+**Add(Object^):** ArrayList'in sonuna bir eleman ekler.
+
+**AddRange(ICollection^):** ArrayList öğesinin sonuna bir dizi eleman ekler.
+
+**BinarySearch(Object^):** Bir nesne için ArrayList elemanlarını sıralar.
+
+**Clear():** ArrayList'i temizler.
+
+**Clone():** ArrayList'i kopyalar.
+
+**Contains(Object^):**  ArrayList elemanlarının verilen elemana sahip olup olmadığını kontrol edin.
+
+ 
+**CopyTo(Array^):** ArrayList öğesini bir Array öğesine çevirir.
+
+**Equals(Object^):** ArrayList elemanının başka bir ArrayList elemanına eşit olup olmadığını kontrol edin.
+
+**Finalize():** ArrayList tarafından kullanılan fazla kaynakları serbest bırakır.
+
+**FixedSize():** Sabit boyuta sahip ArrayList elemanlarını döndürür.
+
+**GetEnumerator():** ArrayList'i bir numaralandırıcı olarak yayınlar.
+
+**GetHashCode():** ArrayList'i karıştırır.
+
+**GetRange(Int, Int):** İlk dizinden başlayıp sağlanan ikinci dizinden biten elemanları döndürür.
+
+**GetType():** ArrayList türünü döndürür.
+
+**IndexOf(Object^):** Verilen nesneyi içeren elemanının dizinini döndürür.
+
+**Insert(Int, Object^):** 
+
+**InsertRange(Int, ICollection^):** V
+
+**LastIndexOf(Object^):** Bir nesnenin en son geçtiği dizini döndürür.
+
+**MemberwiseClone():** Temel sınıf Object nesnesinin bir kopyasını oluşturur.
+
+**ReadOnly(ArrayList^):** ArrayList'i salt okunur olarak döndürür.
+
+**Remove(Object^):** Elemanı ilk bulunduğu yerden siler.
+
+**RemoveAt(Int):** Verilen dizindeki elemanı kaldırır.
+
+**RemoveRange(Int, Int):** Verilen dizindeki listeye bir eleman ekler.
+
+**Repeat(Object^, Int):** Verilen dizine bir dizi eleman ekler.
+
+**Reverse():** ArrayList'teki elemanları sırasını tersine çevirir.
+
+**SetRange(Int, ICollection^):** Bir koleksiyonun elemanlarını belirli bir dizindeki ArrayList'e kopyalar.
+
+**Sort():** ArrayList elemanlarını alfabetik sıraya göre sıralar.
+
+**Synchronized(ArrayList^):** ArrayList'in iş parçacığı için güvenli bir sürümünü döndürür.
+
+**ToArray():** ArrayList elemanlarını bir nesne dizisi olarak döndürür.
+
+**ToString():** ArrayList türünü string olarak döndürür.
+
+**TrimToSize():** Kapasiteyi ArrayList öğesindeki öğe miktarına düşürür.
+
+
+
+

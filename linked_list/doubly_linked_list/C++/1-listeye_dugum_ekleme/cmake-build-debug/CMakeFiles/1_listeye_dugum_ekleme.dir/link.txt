@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/1_listeye_dugum_ekleme.dir/main.cpp.o  -o 1_listeye_dugum_ekleme 

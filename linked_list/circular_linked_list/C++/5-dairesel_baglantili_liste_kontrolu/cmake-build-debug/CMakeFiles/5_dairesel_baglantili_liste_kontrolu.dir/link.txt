@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/5_dairesel_baglantili_liste_kontrolu.dir/main.cpp.o  -o 5_dairesel_baglantili_liste_kontrolu 

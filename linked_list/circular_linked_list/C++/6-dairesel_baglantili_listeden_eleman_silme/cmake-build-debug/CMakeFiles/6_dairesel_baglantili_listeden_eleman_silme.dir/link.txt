@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/6_dairesel_baglantili_listeden_eleman_silme.dir/main.cpp.o  -o 6_dairesel_baglantili_listeden_eleman_silme 

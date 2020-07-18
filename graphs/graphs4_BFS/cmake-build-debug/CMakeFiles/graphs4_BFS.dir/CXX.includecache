@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/asli/Documents/boost_calismalar/veri_yapilari/graphs/graphs4_BFS/main.cpp
+iostream
+-
+list
+-
+

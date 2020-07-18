@@ -1,0 +1,349 @@
+= STACK (YIĞIN)
+:toc:
+
+== Stack Nedir?
+
+Yığın, eleman ekleme ve çıkarma işlemlerinin dizinin en son
+konumuna göre yapıldığı özel bir yapıdır. Bilginin geliş
+sırasına göre, en son gelen elemana ilk erişilen liste yapısına
+yığın (stack) denir. Verilere yalnız bir uçtan erişim sağlanır.
+Sıralı yapılarda olduğu gibi ara elemanlara doğrudan erişim
+yapılamaz.
+
+Sadece ardışık ve sıralı bir şekilde erişilebilen LIFO(Last In
+First Out) mantığıyla çalışan bir veri modeli türüdür.
+Diziler(Arrays) veya bağlı listeler(Linked Lists) yardımıyla
+oluşturulabilir.
+
+İlk giren son çıkar mantığı ile çalışır.
+
+= Yığın yapısının sahip olması gereken temel bileşenler
+*1- Root:* Yığının en altındaki kök düğüm.
+
+*2- Size:* Her Yığın'ın uzunluğu, oluşturulurken
+belirtilmelidir.
+
+*3- Stack Pointer:* Yığında ekleme veya çıkarma işlemine
+yardımcı olacak, eklenen son elemanın yerini gösteren bir
+işaretçi.
+
+Stack üzerinde *ekleme* işlemi yapabiliriz. Buna *push* adı verilir.
+
+Eleman *çıkarma* işlemine ise *pop* adı verilmektedir.
+
+
+
+== Stack Oluşturma
+
+=== Örnek: 1-stack_olusturma
+
+[source, c++]
+----
+#include <iostream>
+#include <stack>
+using namespace std;
+
+//Stack ilk giren son çıkar mantığı ile çalışır
+
+class Stack{
+public:
+    void yiginGoster(stack <int>);
+};
+void Stack::yiginGoster(stack <int> stack)//stack'teki elemanları yazdırır
+{
+    while (!stack.empty())//empty(): yığının boş olup olmadığını kontrol eder
+    {
+        cout << "\t" << stack.top();//yığının en üstteki (en yeni) elemanını verir
+        stack.pop();//yığından eleman çıkarır
+    }
+    cout << endl;
+}
+
+int main ()
+{
+    Stack yigin;
+    stack <int> stack;
+    stack.push(10);//yığına elemanlar eklenir
+    stack.push(30);
+    stack.push(20);
+    stack.push(5);
+    stack.push(1);
+
+    cout << "Stack: ";
+    yigin.yiginGoster(stack);//yıgındaki elemanlar yazdırılır
+
+    cout << endl <<"s.size() : " << stack.size();//yığının boyutunu verir
+    cout << endl<< "s.top() : " << stack.top();//yığının en üstteki (en yeni) elemanını verir
+
+
+    cout << endl<< "s.pop() : ";
+    stack.pop();//yığından eleman çıkarır
+    yigin.yiginGoster(stack);//yıgındaki elemanlar yazdırılır
+
+    return 0;
+}
+----
+
+Ekran Çıktısı
+ 
+ Stack: 	1	5	20	30	10
+ s.size() : 5
+ s.top() : 1
+ s.pop() : 	5	20	30	10
+ 
+Bu örnekte aşağıdaki hazır yığın fonksiyonları kullanılmıştır. 
+
+*push():* Yığına eleman ekler.
+
+*pop():* Yığından eleman çıkarır.
+
+*top():* Yığının en üstteki (en yeni) elemanını verir.
+
+*size():* Yığının boyutunu verir.
+
+*empty():* Yığının boş olup olmadığını kontrol eder.
+
+
+=== Örnek: 2-stack
+
+[source, c++]
+----
+#include <iostream>
+using namespace std;
+
+#define STACK_SIZE 100//stack'e max eklenecek eleman sayısı
+
+//Stack ilk giren son çıkar mantığı ile çalışır
+
+class Stack {
+public:
+    int elemanSayisi;
+
+public:
+    int stackBoyutu[STACK_SIZE];//yığındaki elemanlar bu değişkende saklanır
+    Stack() { elemanSayisi = -1; }
+    bool push(int x);
+    int pop();
+    int peek();
+    bool isEmpty();
+};
+
+bool Stack::push(int eleman) //yığına eleman ekler
+{
+    if (elemanSayisi >= (STACK_SIZE - 1)) {//eleman sayısı STACK_SIZE'dan buyuk ise yığın tasması
+        cout << "Yıgın tasması"<< endl;
+        return false;
+    }
+    else {//yığına elemanı ekler ve elemanSayisini arttırır
+        stackBoyutu[elemanSayisi] = eleman;
+        elemanSayisi++;
+        cout << eleman << " Yigina eleman eklendi"<< endl;
+        return true;
+    }
+}
+
+int Stack::pop() //yığından eleman çıkarır
+{
+    if (elemanSayisi < 0) {//yığındaki eleman sayısı<0 ise
+        cout << "Yigina eleman eklenemez";
+        return 0;
+    }
+    else {
+        int x = stackBoyutu[elemanSayisi--];//yığına son eklenen elamanı yığından atar ve eleman sayısını azaltır
+        cout<< "Son eklenen eleman yigindan atildi"<< endl;
+        return x;
+    }
+}
+int Stack::peek()//eleman sayısı<0 olursa ve  STACK_SIZE 100'den buyuk olursa bu fonksiyon çalışır.
+{
+    if (elemanSayisi < 0) {
+        cout << "Yigindan eleman tasmasi"<< endl;
+        return 0;
+    }
+    else {
+        int x = stackBoyutu[elemanSayisi];
+        return x;
+    }
+}
+
+bool Stack::isEmpty()//yığın boş ise bu fonksiyon çalışır
+{
+    return (elemanSayisi < 0);
+}
+
+int main()
+{
+    class Stack s;
+    s.push(10);//yığına elemanlar eklenir
+    s.push(20);
+    s.push(30);
+    s.pop() ;//yığından elemanları siler
+
+    cout<< endl << endl;
+
+    for(int i=0;i<120;i++)
+    {
+        s.push(i);//0-120 arası sayılar yığına eklenir
+    }
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 10 Yigina eleman eklendi
+ 20 Yigina eleman eklendi
+ 30 Yigina eleman eklendi
+ Son eklenen eleman yigindan atildi
+ 0 Yigina eleman eklendi
+ 1 Yigina eleman eklendi
+ ...
+ 86 Yigina eleman eklendi
+ Yıgın tasması
+ Yıgın tasması
+ Yıgın tasması
+
+
+Bu örnekte max eleman sayısı 100 olabilecek bir dizi oluşturulup bu dizi üzerine stack işlemleri yaptırılmıştır.
+Stack işlemlerinde kullanılan metotlar hazır kullanılmamıştır.
+
+
+=== Örnek: 3-stack
+
+Bağlı liste ve sınıf ile yığın oluşturma
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Sinif{
+public:
+    int veri;
+    Sinif()= default;
+
+    Sinif(int gelenVeri): veri(gelenVeri) {
+    }
+
+    bool operator==(const Sinif& rhs){
+        if(this->veri== rhs.veri){
+        return true;}
+        return false;
+    }
+};
+
+std::ostream& operator<<(std::ostream& out, const Sinif& rhs)
+{
+    out << rhs.veri;
+    return out;
+}
+
+template  <typename T>
+class Stack {
+    struct  node{
+        T veri;
+        node *onceki;
+        node()= default;
+        node(T gelenVeri): veri(gelenVeri) {
+        }
+        node(node&&)= default;
+        node(const node&)= default;
+        ~node()= default;
+    };
+
+    node *root;
+    node *SP;
+    int boyut;
+    int kapasite;
+
+public :
+    Stack(int gelenBoyut){
+    this->root=nullptr;
+    this->boyut=gelenBoyut;
+    this->SP=this->root;
+    this->kapasite=this->boyut;
+}
+
+~Stack(){
+    delete root;
+}
+
+    void push(T gelenVeri) {
+        if (this->isFull()) {
+            std::cout << "Yigin tasmasi!"<< endl;
+        }
+        else {
+            node* temp = new node(gelenVeri);
+            temp->onceki = this->SP;
+            this->SP = temp;
+            this->kapasite--;
+        }
+    }
+    T pop() {
+        if (this->isEmpty()) {
+            cout << "Yigin bos!"<< endl;
+            return NULL;
+        }
+        else {
+            node* temp = this->SP;
+            this->SP = this->SP->onceki;
+            this->kapasite++;
+            return temp->veri;
+        }
+    }
+    void display() {
+        this->stackPrinter(this->SP);
+    }
+    bool isFull() {
+        if (this->kapasite == 0) {
+            return true;
+        }
+        else
+            return false;
+    }
+    bool isEmpty() {
+        if (this->kapasite == this->boyut)
+            return true;
+        else
+            return false;
+    }
+    void stackPrinter(node* temp) {
+        if (temp == nullptr) {
+            return;
+        }
+        cout<<temp->veri << endl;
+        temp = temp->onceki;
+        this->stackPrinter(temp);
+    }
+    T peek() {
+        if (this->SP == nullptr)
+            return 0;
+        return this->SP->veri;
+    }
+};
+
+int main() {
+    Stack<Sinif> test(300000);
+    for (int i = 0; i < 30; i++)
+    {
+        test.push(Sinif(i + 1));
+    }
+    cout<<test.peek() << endl;
+    for (int i = 0; i < 30; i++)
+    {
+        test.pop();
+    }
+    test.display();
+    cout<< test.peek() << endl;
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 30
+ 0
+ 
+

@@ -1,0 +1,4 @@
+/home/asli/Downloads/clion-2019.2.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/asli/Documents/boost_calismalar/veri_yapilari/linked_list/doubly_linked_list/C++/2-listeden_dugum_silme
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/asli/Documents/boost_calismalar/veri_yapilari/linked_list/doubly_linked_list/C++/2-listeden_dugum_silme/cmake-build-debug

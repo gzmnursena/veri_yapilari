@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/1_dairesel_baglantili_liste_olusturma.dir/main.cpp.o  -o 1_dairesel_baglantili_liste_olusturma 

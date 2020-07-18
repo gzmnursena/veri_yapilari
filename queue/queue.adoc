@@ -1,0 +1,308 @@
+= QUEUE (KUYRUK)
+:toc:
+
+== Kuyruk Nedir? 
+
+Kuyruk veri yapısını gerçek hayattaki kuyruk gibi düşünebilirsiniz,
+kuyruğun en önündeyseniz ilk sizin işiniz biter, kuyruğun ne kadar
+gerisindeyseniz işiniz o kadar gecikecektir.
+
+İlk giren ilk çıkar mantığı ile çalışır.
+
+Sadece ardışık ve sıralı bir şekilde erişilebilen FIFO(First In
+First Out) mantığıyla çalışan bir veri modeli türüdür.
+Diziler(Arrays) veya bağlı listeler(Linked Lists) yardımıyla
+oluşturulabilir.
+
+-- Kuyruk yapısının sahip olması gereken temel bileşenler:
+
+*1-Front:* Kuyruğun başını gösteren işaretçi düğüm.
+
+*2-Rear:* Kuyruğun sonunu gösteren işaretçi düğüm.
+
+*3-Size:* Her yığının uzunluğu, oluşturulurken belirtilmelidir.
+
+
+-- Kuyruk veri yapısında kullanılan fonksiyonlar:
+
+*isFull():* Kuyruğun dolu olup olmadığını kontrol eder.
+
+*isEmpty():* Kuyruğun boş olup olmadığını kontrol eder.
+
+*enqueue():* Kuyruğun arkasına yeni bir eleman ekler.
+
+*dequeue():* Kuyruğun önündeki elemanı kaldırır.
+
+*peek():* Kuyruğun başındaki elemanı getirir fakat kuyruktan çıkarmaz.
+
+*front():* Kuyrukta en öndeki elemanı tutar.
+
+*rear():* Kuyruğun en sonundaki elemanı tutar.
+
+
+
+=== Örnek: 1-queue_olusturma
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+#define INT_MIN 100
+
+//Queue ilk giren ilk çıkar mantığı ile çalışır
+
+class Queue{
+public:
+    int on, arka, boyut;
+    int kapasite;
+    int *dizi;
+    Queue* createQueue(int);
+    int isFull(Queue*);
+    int isEmpty(Queue*);
+    void enqueue(Queue *, int);
+    int dequeue(Queue*);
+    int front(Queue*);
+    int rear(Queue*);
+};
+
+Queue* Queue::createQueue(int kapasite){
+    Queue* kuyruk = new Queue();//yeni bir kuyruk oluşturur
+    kuyruk->kapasite = kapasite;//kuyruğun kapasitesine fonksiyondan gelen kapasite değerini atar
+    kuyruk->on = kuyruk->boyut = 0;
+    kuyruk ->arka = kapasite - 1;
+    kuyruk->dizi = new int[(kuyruk->kapasite * sizeof(int))];
+    return kuyruk;
+}
+
+int Queue::isFull(Queue* kuyruk){//kuyruğun dolu olup olmadığını kontrol eder
+    return (kuyruk->boyut == kuyruk->kapasite); //kuyruk dolu ise boyutunu kapasite değeri döndürür
+}
+
+int Queue::isEmpty(Queue* kuyruk){//kuyruğun boş olup olmadığını kontrol eder
+    return (kuyruk->boyut == 0); //kuyruk boş ise boyutu 0 döndürür
+}
+
+
+void Queue::enqueue(Queue *kuyruk, int item){//kuyruğun arkasına yeni bir eleman ekler
+    if (isFull(kuyruk))
+        return;
+    kuyruk->arka = (kuyruk->arka + 1) % kuyruk->kapasite;
+    kuyruk->dizi[kuyruk->arka] = item;
+    kuyruk->boyut = kuyruk->boyut + 1;
+    cout << item << " kuyruga eklendi"<< endl;
+}
+
+int Queue::dequeue(Queue* kuyruk){//kuyruğun önündeki elemanı kaldırır
+    if (isEmpty(kuyruk))
+        return INT_MIN;
+    int item = kuyruk->dizi[kuyruk->on];
+    kuyruk->on = (kuyruk->on + 1) % kuyruk->kapasite;
+    kuyruk->boyut = kuyruk->boyut - 1;
+    return item;
+}
+//peek():Kuyruğun başındaki elemanı getirir fakat kuyruktan çıkarmaz
+
+int Queue::front(Queue* kuyruk){//front(): kuyrukta en öndeki elemanı tutar
+    if (isEmpty(kuyruk))
+        return INT_MIN;
+    return kuyruk->dizi[kuyruk->on];//kuyruk boş değilse en öndeki elemanı döndürür
+}
+
+
+int Queue::rear(Queue* kuyruk){//rear(): kuyruğun en sonundaki elemanı tutar
+    if (isEmpty(kuyruk))
+        return INT_MIN;
+    return kuyruk->dizi[kuyruk->arka];//kuyruk boş değilse en sondaki elemanı döndürür
+}
+
+
+int main()
+{
+    Queue queue;
+    Queue* kuyruk = queue.createQueue(1000);//dinamik ve 1000 kapasiteli bir kuyruk oluşturur
+
+    queue.enqueue(kuyruk, 10);//kuyruğun arkasına sırasıyla 10,20,30,40 değerlerini ekler
+    queue.enqueue(kuyruk, 20);
+    queue.enqueue(kuyruk, 30);
+    queue.enqueue(kuyruk, 40);
+
+    cout<<queue.dequeue(kuyruk)<<" kuyruktan kaldirildi"<< endl;//kuyruğun önündeki elemanı kaldırır
+
+    cout << "ondeki(front) eleman " << queue.front(kuyruk) << endl;//kuyrukta en öndeki elemanı verir
+    cout << "arkadaki(rear) eleman " << queue.rear(kuyruk) << endl;//kuyruğun en sonundaki elemanı verir
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ 10 kuyruga eklendi
+ 20 kuyruga eklendi
+ 30 kuyruga eklendi
+ 40 kuyruga eklendi
+ 10 kuyruktan kaldirildi
+ ondeki(front) eleman 20
+ arkadaki(rear) eleman 40
+
+Bu örnekte;
+
+enqueue(): Sıraya bir öğe ekler. Kuyruk doluysa, taşma koşulu olduğu
+söylenir.
+
+dequeue(): Bir öğeyi sıradan kaldırır. 
+
+front(): Baştaki elemanı kuyruktan alır.
+
+rear(): Sıradaki son elamanı alır.
+
+komutları ile kuyruk yapısı basit şekilde oluşturulmuştur.
+
+=== Örnek: 1-queue
+
+Bağlı liste ve sınıf ile kuyruk oluşturma
+
+[source,c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Sinif{
+public:
+    int veri;
+    Sinif()= default;
+
+    Sinif(int gelenVeri): veri(gelenVeri) {
+    }
+
+    bool operator==(const Sinif& rhs){
+        if(this->veri== rhs.veri){
+            return true;
+        }
+        return false;
+    }
+};
+
+std::ostream& operator<<(std::ostream& out, const Sinif& rhs)
+{
+    out << rhs.veri;
+    return out;
+}
+
+template  <typename T>
+class Queue {
+    struct  node{
+        T veri;
+        node *onceki= {};
+        node()= default;
+        node(T gelenVeri): veri(gelenVeri) {
+        }
+        node(node&&)= default;
+        node(const node&)= default;
+        ~node()= default;
+    };
+
+    node *front;
+    node *rear;
+    int boyut;
+    int kapasite;
+
+public :
+    Queue(int gelenBoyut){
+        this->boyut = gelenBoyut;
+        this->front = this->rear = nullptr;
+        this->kapasite = this->boyut;
+
+    }
+
+    ~Queue(){
+        delete front;
+    }
+
+
+    void enqueue(T gelenVeri) {
+        if (this->isFull()) {
+            cout << "Queue is Full!\n";
+        }
+        else if (this->isEmpty()) {
+            this->front = new node(gelenVeri);
+            this->rear = this->front;
+            this->kapasite--;
+        }
+        else {
+            node* temp = new node(gelenVeri);
+            this->rear->onceki = temp;
+            this->rear = temp;
+            this->kapasite--;
+        }
+    }
+    T dequeue() {
+        if (this->isEmpty()) {
+            cout << "Queue is Empty!\n";
+            return NULL;
+        }
+        else {
+            node* temp = this->front;
+            this->front = this->front->onceki;
+            this->kapasite++;
+            return temp->veri;
+        }
+    }
+    void display() {
+        this->queuePrinter(this->front);
+    }
+    bool isFull() {
+        if (this->kapasite == 0) {
+            return true;
+        }
+        else
+            return false;
+    }
+    bool isEmpty() {
+        if (this->kapasite == this->boyut)
+            return true;
+        else
+            return false;
+    }
+    void queuePrinter(node* temp) {
+        if (temp == nullptr) {
+            return;
+        }
+        cout << temp->veri << "\n";
+        temp = temp->onceki;
+        this->queuePrinter(temp);
+    }
+    T peek() {
+        if (this->front == nullptr)
+            return NULL;
+        return this->front->veri;
+    }
+};
+
+int main() {
+    Queue<Sinif> test(300000);
+    for (int i = 0; i < 300001; i++)
+    {
+        test.enqueue(Sinif(i + 1));
+    }
+    cout<<test.peek() << endl;
+    for (int i = 0; i < 300001; i++)
+    {
+        test.dequeue();
+    }
+    test.display();
+    cout<< test.peek() << endl;
+    return 0;
+}
+
+----
+
+Ekran Çıktısı:
+
+ 
+Bu örnekte enqueue() metodu ile kuyruğa veri eklenmiş ve dequeue()
+metodu ile kuyruktan veri çıkartılmıştır.
+
+
