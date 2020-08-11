@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/6_dugum_sayisi.dir/main.cpp.o  -o 6_dugum_sayisi 

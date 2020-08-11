@@ -1,0 +1,105 @@
+= Unrolled Linked List
+:toc:
+
+== Unrolled Linked List Nedir?
+
+Dizi ve bağlantılı liste gibi, unrolled bağlantılı liste de **doğrusal bir veri yapısıdır** ve bağlantılı listenin bir çeşididir. Basit bağlantılı listenin aksine, her düğümde birden çok öğe saklar. Yani, tek bir öğeyi bir düğümde saklamak yerine, kaydedilmemiş bağlantılı listeler bir düğümde bir dizi öğeyi saklar. Kayıtlı bağlantılı liste, her bir düğümde birden çok öğeyi depolayarak basit bağlantılı listelere kıyasla bellek ek yükünü azalttığı için hem dizinin hem de bağlantılı listenin avantajlarını kapsar ve ayrıca bağlantılı bir listeye göre hızlı ekleme ve silme avantajına sahiptir.
+
+image::images/unrolled_linked_list1.png[]
+
+=== Avantajları
+
+Önbellek davranışı nedeniyle, doğrusal olmayan arama listelerde doğrusal arama çok daha hızlıdır.
+Sıradan bağlantılı listeye kıyasla, işaretçiler / referanslar için daha az depolama alanı gerektirir.
+Ekleme, silme ve çapraz geçiş gibi işlemleri normal bağlantılı listelere göre daha hızlı gerçekleştirir (çünkü arama daha hızlıdır).
+
+=== Dezavantajları
+
+Düğüm başına genel yük, tek başına bağlı listelerden nispeten yüksektir. 
+
+== Örneğin
+
+**3 düğüm ile bir Unrolled Linked List oluşturan program...**
+
+[source,c++]
+----
+#include <bits/stdc++.h>
+using namespace std;
+#define maxElements 4
+
+//3 düğüm ile bir Unrolled Linked List oluşturan program...
+
+// Unrolled Linked List Node
+class Node
+{
+    public:
+    int numElements;
+    int array[maxElements];
+    Node *next;
+};
+
+/* Unrolled Linked List yazdırma fonksiyonu
+ve tüm elemanlarını yazdırır*/
+void printUnrolledList(Node *n)
+{
+    while (n != NULL)
+    {
+        // geçerli düğümdeki elemanları yazdırma
+        for (int i=0; i<n->numElements; i++)
+            cout<<n->array[i]<<" ";
+
+        //sonraki düğüme git
+        n = n->next;
+    }
+}
+
+int main()
+{
+    Node* head = NULL;
+    Node* second = NULL;
+    Node* third = NULL;
+
+    // beklekten 3 düğüm tahsis eder
+    head = new Node();
+    second = new Node();
+    third = new Node();
+
+   /* ilk düğüme bazı değerler koyalım
+    (Değer sayısı maxElement değerinden küçük veya ona eşit olmalıdır)*/
+    head->numElements = 3;
+    head->array[0] = 1;
+    head->array[1] = 2;
+    head->array[2] = 3;
+
+    //ilk düğümü ikinci düğüme bağlar
+    head->next = second;
+
+    /*ikinci düğüme bazı değerler koyalım
+     (Değer sayısı maxElement değerinden küçük veya ona eşit olmalıdır)*/
+    second->numElements = 3;
+    second->array[0] = 4;
+    second->array[1] = 5;
+    second->array[2] = 6;
+
+    //ikinci düğümü üçüncü düğüme bağlar
+    second->next = third;
+
+    /*üçüncü düğüme bazı değerler koyalım
+     (Değer sayısı, maksimum Öğe'den küçük veya ona eşit olmalıdır)*/
+    third->numElements = 3;
+    third->array[0] = 7;
+    third->array[1] = 8;
+    third->array[2] = 9;
+    third->next = NULL;
+
+    printUnrolledList(head);
+
+    return 0;
+}
+
+----
+
+
+Ekran Çıktısı:
+
+ 1 2 3 4 5 6 7 8 9 

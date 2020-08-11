@@ -1,0 +1,317 @@
+= VEKTÖRLER
+:toc:
+
+== Vektör Nedir?
+
+Vector dinamik bir dizidir ve bazı fonksiyonlar sayesinde diziye eleman ekleme çıkarma yaptıkça dizinin uzunluğu otomatik olarak büyür ve küçülür. Java’daki ArrayList gibi çalışma mantığı vardır. Her tür veri tiplerini ve nesneleri tutabilir.
+
+Vektör (vector) standart isim uzayının (std::) bir parçasıdır ve aslında bir sınıf şablonudur. STL (Standart Şablon Kütüphanesi)’in bir üyesidir. Vektör bir dinamik dizi gerçeklemesidir, programlarda hemen hemen her tür veri tipi ya da nesneyi tutan bir dizi oluşturmak için kullanılabilir.
+
+Vektör kullanımı için aşağıdaki kütüphanenin projeye eklenmesi gerekir.
+
+[source,c++]
+----
+#include <bits/stdc++.h>
+----
+veya
+
+[source,c++]
+----
+#include <vector>
+----
+
+
+**Vector Tanımı**
+
+Başlangıçta boyut vermeden tanımlamak için:
+[source,c++]
+----
+std::vector<veri_tipi> vector_ismi;
+----
+Boyut belirterek tanımlamak için:
+
+[source,c++]
+----
+std::vector<veri_tipi> vector_ismi(boyut);
+----
+
+**Örneğin;**
+Aşağıdaki gibi vektörler tanımlanabilir:
+[source,c++]
+----
+vector<int> sayilar(10);
+vector<string> metin(5);
+vector<int> sayilar(10,5); //10 elemanlı vektor boyutu ve her eleman için 5 değeri atandı.
+----
+
+
+*Vektör ile Kullanılabilecek Fonksiyonlar*
+
+*begin():* Vektörün ilk elemanını verir.
+
+*end():* Vektörün son elemanını verir. 
+
+*rbegin():* Vektörün son elemanını verir.
+
+*rend():* Vektörün ilk elemanının öncesini verir. 
+
+*push_back() :* Veriyi vektörün sonuna ekler.
+
+*pop_back() :* Vektörün sahip olduğu son elemanı çıkarır.
+
+*back() :* Vektörün son elemanını döndürür.
+
+*swap() :* Vektördeki verilerin tümünü bir başka vektördekilerle yer değiştirir.
+
+*insert() :* Vektör içine belirtilen bir konuma eleman ekler veya çıkarır.
+
+*erase() :* Vektör içinde belirtilen bir konumda bulunan elemanı çıkarır.
+
+*size() :* Vektör boyutunu döndürür.
+
+*begin() :* Vektör başlangıcını gösterir.
+
+*end() :* Vektör sonunu gösterir.
+
+*clear() :* Vektör içeriğini siler.
+
+*fill_n(vector.begin(), a, b) :* Vektörün başından itibaren a adet b değerinde eleman ekler.
+
+*size():* Vektörün boyutunu verir.
+
+*capacity():* Vektörün kapasitesini verir.
+
+*max_size():* Vektörün alabileceği maksimum boyutunu verir.
+
+
+=== Örnekler
+
+Örneğin;
+
+[source,c++]
+----
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> sayilar(10,5);//10 elemanlı vektor boyutu ve her eleman için 5 değeri atar
+    for(int i= 0; i<sayilar.size(); i++)//sayilar vektorunun boyutu kadar(10) döngü döner
+    {
+        cout << sayilar[i]<<"  ";//vektoru yazdırır
+    }
+
+    cout<<endl;
+    vector <int> sayilar2(10);//10 elemanlı vektor
+    for(int i=10; i>=1; i--)
+    {
+        vector<int>::iterator it = sayilar2.begin() + 1;  //başlangıçtan itibaren bir ileri
+        sayilar2.insert(it,i);  //vektore i'yi ekler
+    }
+
+    cout<<"sayilar2.size()= "<<sayilar2.size()<<endl;
+    for(int i=0; i<sayilar2.size(); i++)
+    {
+        cout<< sayilar2[i]<<"  ";//vektoru yazdırır
+    }
+
+    cout<<endl;
+    vector<int> sayilar3;//Başlangıçta boyutu belli olmayan dinamik vektor.
+
+    for(int i=0; i<10; i++)
+        sayilar3.push_back(i);//vektorun sonuna push_back() fonksiyonu ile 0-10 arası sayıları ekler
+
+
+    for(int i=0; i<sayilar3.size(); i++)
+        cout<<sayilar3[i]<<"  ";//vektorun yazdırır
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ 5  5  5  5  5  5  5  5  5  5  
+ sayilar2.size()= 20
+ 0  1  2  3  4  5  6  7  8  9  10  0  0  0  0  0  0  0  0  0  
+ 0  1  2  3  4  5  6  7  8  9
+
+
+Örneğin;
+
+[source,c++]
+----
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+void yazdir(vector <int> vektor)
+{
+    if(vektor.size()!=0)
+    {
+        for(int i=0; i<vektor.size(); i++)//dongu vektorun boyutuna kadar dönerek vektorun elemanlarını yazdırır
+        {
+            cout<< vektor[i] << "  ";
+        }
+        cout<< endl;
+    }
+
+    else//boyut 0 ise vektorun hiç elemanı yoktur
+    {
+        cout<<"clear çalıştı"<< endl;
+    }
+}
+
+int main()
+{
+//begin : vektorun ilk elemanı
+//back : vektorun son elemanı
+
+    vector <int> sayilar(10); //sayilar vektörü oluşturuldu
+
+    for(int i=0; i<sayilar.size(); i++)
+    {
+        sayilar[i]=i;  //vektöre sayılar atandı
+    }
+
+    yazdir(sayilar);
+
+    sayilar.push_back(40);  //vektorun sonuna sayılar eklendi
+    sayilar.push_back(50);
+    sayilar.push_back(60);
+    yazdir(sayilar);
+
+    sayilar.pop_back(); //vektörün son elemanını sildi
+    yazdir(sayilar);
+
+    sayilar.insert(sayilar.begin()+2,66);  //2. indeksi 66 olarak değiştirir.
+    sayilar.insert(sayilar.begin()+3,74); //3. indeksi 74 olarak değiştirir.
+    yazdir(sayilar);
+
+    sayilar.erase(sayilar.begin()+2);  //verilen konumdaki elemanı siler. (2. indeksi)
+    yazdir(sayilar);
+    sayilar.erase(sayilar.begin()+2);
+    yazdir(sayilar);
+
+    cout<<"end: ";
+    sayilar.end();  //vektörun tamamını ekrana yazdırır
+    yazdir(sayilar);
+
+    sort (sayilar.begin (), sayilar.end ());//vektoru küçükten->buyuge (azdan->çoğa) sıralar
+    cout << "Siralanmis hali: ";
+    copy (sayilar.begin (), sayilar.end (), ostream_iterator <int> (cout, " "));//vektoru yazdırır
+
+    cout<<endl;
+    vector <int> sayilar2(10,0);
+    sayilar.swap(sayilar2);//iki vektoru yer değiştirir
+    yazdir(sayilar2);
+
+    sayilar.clear();  //vektoru siler
+    yazdir(sayilar);
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ 0  1  2  3  4  5  6  7  8  9  
+ 0  1  2  3  4  5  6  7  8  9  40  50  60  
+ 0  1  2  3  4  5  6  7  8  9  40  50  
+ 0  1  66  74  2  3  4  5  6  7  8  9  40  50  
+ 0  1  74  2  3  4  5  6  7  8  9  40  50  
+ 0  1  2  3  4  5  6  7  8  9  40  50  
+ end: 0  1  2  3  4  5  6  7  8  9  40  50  
+ Siralanmis hali: 0 1 2 3 4 5 6 7 8 9 40 50 
+ 0  1  2  3  4  5  6  7  8  9  40  50  
+ clear çalıştı
+
+
+Örneğin;
+
+[source,c++]
+----
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void yazdir(vector<int>sayilar)
+{
+    for(int i=0; i<sayilar.size(); i++)//dongu vektorun boyutuna kadar dönerek vektorun elemanlarını yazdırır
+    {
+        cout << sayilar[i]<<"  ";
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    vector<int> sayilar(10,0);//boyutu 10 olan ve elemanları 0 olan vektor
+
+    vector<int>::iterator it = sayilar.begin() + 2;//2. index konum olarak belirtilir
+    sayilar.insert(it,66); //belirtilen konuma eleman ekler
+    yazdir(sayilar);
+
+
+    it = sayilar.begin() + 2;
+    sayilar.erase(it);//vektör içerisinden eleman çıkartır
+    yazdir(sayilar);
+
+    //fill_n() fonksiyonu kullanımı...
+
+    fill_n(sayilar.begin(),4,8);//dizi başından itibaren 4 adet 8 değerini ekler
+    yazdir(sayilar);
+
+    fill_n(sayilar.begin() + 3,2,7);//dizinin ilk 3 elemanından sonra 2 adet 7 değerini ekler
+    yazdir(sayilar);
+
+    return 0;
+}
+----
+
+
+Ekran Çıktısı:
+
+ 0  0  66  0  0  0  0  0  0  0  0  
+ 0  0  0  0  0  0  0  0  0  0  
+ 8  8  8  8  0  0  0  0  0  0  
+ 8  8  8  7  7  0  0  0  0  0 
+
+
+Örneğin;
+
+[source,c++]
+----
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    vector<std::pair<int, string>> vektor = { {1, "C++"},{2, "Python"},{3, "C#"}};
+    //std::pair= farklı tipte iki değeri birleştirmek için kullanılır. Örnekte int ve string tipindeki veriler birleştirilmiştir
+    sort(vektor.begin(), vektor.end());//vektoru küçükten->büyüğe doğru sıralar
+    for(auto item: vektor) {//foreach döngüsü
+        cout << "(" << item.first << "," << item.second << ")\n";//vektürün birinci ve ikinci değerlerini yazdırır
+    }
+}
+----
+
+
+Ekran Çıktısı:
+
+ (1,C++)
+ (2,Python)
+ (3,C#)
+
+

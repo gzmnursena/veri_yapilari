@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="7_dairesel_baglantili_listede_dugumlerin_sayisi" targetName="7_dairesel_baglantili_listede_dugumlerin_sayisi" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5ee9dcb7-0860-4bf9-9d4e-5bb30e010ee5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../Boost.Algorithm/boost_algorithm.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Boost.Algorithm/boost_algorithm.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Boost.Algorithm/sample-1/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Boost.Algorithm/sample-1/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../boost ornekler/sifreOlustur/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../boost ornekler/sifreOlustur/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../boost ornekler/tekrarsiz_rastgele/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../boost ornekler/tekrarsiz_rastgele/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../not.odt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/1-dairesel_baglantili_liste_olusturma/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/1-dairesel_baglantili_liste_olusturma/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/2-dairesel_baglantili_listeye_eleman_ekleme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/2-dairesel_baglantili_listeye_eleman_ekleme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/3-dairesel_baglantili_listeyi_ikiye_bolme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/3-dairesel_baglantili_listeyi_ikiye_bolme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/4-dairesel_baglantili_liste_siralama/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/4-dairesel_baglantili_liste_siralama/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/5-dairesel_baglantili_liste_kontrolu/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/5-dairesel_baglantili_liste_kontrolu/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/6-dairesel_baglantili_listeden_eleman_silme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/6-dairesel_baglantili_listeden_eleman_silme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/7-dairesel_baglantili_listede_dugumlerin_sayisi/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/C++/7-dairesel_baglantili_listede_dugumlerin_sayisi/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/8-dairesel_baglantili_listede_ilk_ve_son_dugumleri_degistirme/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/C++/8-dairesel_baglantili_listede_ilk_ve_son_dugumleri_degistirme/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/1-listeye_dugum_ekleme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/1-listeye_dugum_ekleme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/10-listeyi_dondurme/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/10-listeyi_dondurme/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/11-listeyi_siralama/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/11-listeyi_siralama/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/2-listeden_dugum_silme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/2-listeden_dugum_silme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/3-listeyi_ters_cevir/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/3-listeyi_ters_cevir/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/4-quick_sort/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/4-quick_sort/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/5-merge_sort/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/5-merge_sort/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/6-indekse_gore_silme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/6-indekse_gore_silme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/7-siralanmis_tekrarli_verileri_sil/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/7-siralanmis_tekrarli_verileri_sil/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/8-siralanmamis_tekrarli_verileri_sil/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/8-siralanmamis_tekrarli_verileri_sil/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doubly_linked_list/C++/9-listenin_boyutunu_bulma/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../doubly_linked_list/C++/9-listenin_boyutunu_bulma/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linked_list_dokuman/linked_list.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../linked_list_dokuman/linked_list.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/1-create_linked_list/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/1-create_linked_list/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/10-siralanmamis_tekrarli_verileri_sil/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/10-siralanmamis_tekrarli_verileri_sil/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/11-baglantili_listeyi_ters_cevir/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/11-baglantili_listeyi_ters_cevir/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/2-insert_linked_list/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/2-insert_linked_list/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/3-verilen_elemani_silme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/3-verilen_elemani_silme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/4-indekse_gore_silme/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/4-indekse_gore_silme/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/5-remove_linked_list/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/5-remove_linked_list/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/6-dugum_sayisi/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/6-dugum_sayisi/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/7-search_linked_list/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/7-search_linked_list/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/8-arama_index/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/8-arama_index/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/9-sirali_tekrarli_verileri_sil/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../singly_linked_list/C++/9-sirali_tekrarli_verileri_sil/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/1-listeOlusturma/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/1-listeOlusturma/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/2-listeninBasinaSonunaElemanEkleme/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/2-listeninBasinaSonunaElemanEkleme/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/3-listeninBasinaSonunaElemanEkleme/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../singly_linked_list/C++/sinif_yapisi_ile_bagli_liste/3-listeninBasinaSonunaElemanEkleme/main.cpp" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1Y2VEWbqERNU0e00zIL5uXsIWB5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Boost.Array" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="7_dairesel_baglantili_listede_dugumlerin_sayisi" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="7_dairesel_baglantili_listede_dugumlerin_sayisi" TARGET_NAME="7_dairesel_baglantili_listede_dugumlerin_sayisi" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="7_dairesel_baglantili_listede_dugumlerin_sayisi" RUN_TARGET_NAME="7_dairesel_baglantili_listede_dugumlerin_sayisi">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ee9dcb7-0860-4bf9-9d4e-5bb30e010ee5" name="Default Changelist" comment="" />
+      <created>1582140564581</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582140564581</updated>
+      <workItem from="1582140565776" duration="977000" />
+      <workItem from="1582225714902" duration="6944000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,43 @@
+* xref:array_lists/array_lists.adoc[Array List]
+* Linked List
+** xref:singly_linked_list/singly_linked_list.adoc[Singly Linked List]
+** xref:doubly_linked_list/doubly_linked_list.adoc[Doubly Linked List]
+** xref:circular_linked_list/circular_linked_list.adoc[Doubly Linked List]
+* xref:stack.adoc[Stack]
+* xref:graphs.adoc[Graphs]
+* xref:grahash_tablesphs.adoc[Hash Tables]
+* xref:queue.adoc[Queue]
+* xref:vector.adoc[Vector]
+* TREE
+** xref:avl_tree.adoc[Avl Tree]
+** xref:heap_tree.adoc[Heap Tree]
+* xref:conc_tree_list/conc_tree_list.adoc[Conc Tree List]
+* xref:DCEL/dcel.adoc[DCEL]
+* xref:free_list/free_list.adoc[DCEL]
+* xref:hash_tables/hash_tables.adoc[Hash Tables]
+* xref:lists/lists.adoc[Lists]
+* xref:self_organizing_list/self_organizing_list.adoc[Self Organizing List]
+* xref:skip_list/skip_list.adoc[Skip List]
+* xref:unrolled_linked_list/unrolled_linked_list.adoc[Unrolled Linked List]
+* xref:xor_linked_list/xor_linked_list.adoc[Xor Linked List]
+* xref:zipper/zipper.adoc[Zipper]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

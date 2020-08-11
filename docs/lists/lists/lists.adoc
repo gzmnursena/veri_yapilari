@@ -1,0 +1,296 @@
+= Lists (Listeler)
+
+Standart Şablon Kütüphanesinin (STL) bir üyesi olan liste çift bağlantılıdır. Erişimi yavaştır çünkü herhangi bir öğeye ulaşmak için listenin başından itibaren geçilmesi gerekir.
+
+== Genel Kullanımı
+
+[source,c++]
+----
+std::list integer_listesi;
+----
+ 
+C ++ listeleri, çalışma zamanında her iki uçtan gerektiğinde küçülebilir veya genişletilebilir. Depolama gereksinimi dahili ayırıcı tarafından otomatik olarak yerine getirilir.
+
+Sıfır boyutlu listeler de geçerlidir. Bu durumda list.begin() ve list.end() aynı yeri gösterir. Ancak front() veya back() çağırma davranışı tanımsızdır.
+
+Listenin başlık dosyasındaki tanımı aşağıdaki gibidir.
+[source,c++]
+----
+template < class T, class Alloc = allocator<T> > class list;
+----
+
+T ⇒ İçerdiği elemanın tipi.
+
+T ⇒ Kullanıcı tanımlı tip de dahil olmak üzere başka herhangi bir veri tipiyle değiştirilebilir.
+
+Alloc ⇒ Ayırma nesnesinin türü.
+
+Varsayılan olarak, en basit bellek ayırma modelini tanımlayan ve değerden bağımsız olan ayırıcı sınıf şablonu kullanılır.
+
+Tamsayıların bir listesini yapmak istiyorsak, bunu aşağıdaki kodla yapabiliriz.
+[source,c++]
+----
+list<int> integer_list;
+----
+
+
+== List Constructors (Liste Yapıcıları)
+
+*1. empty container constructor (default constructor)*
+
+Öğeleri olmayan boş bir kap oluşturur
+
+*2. fill constructor*
+
+N elemanlı bir kap yapar . Her öğe val'in bir kopyasıdır .
+
+*3. range constructor*
+
+Her öğe o aralıktaki karşılık gelen öğesinden aynı sırayla oluşturulmuş olarak [ilk, son) aralığı kadar çok öğeye sahip bir kap oluşturur .
+
+*4.copy constructor*
+
+Aynı sırayla x'deki öğelerin her birinin bir kopyasını içeren bir kap oluşturur .
+
+== Destructor
+
+C ++ destructor *std::list::~ list()*, liste nesnesini belleğini ayırarak yok eder.
+
+Aşağıdaki kodu kullanarak C ++ yıkıcı tanımlayabilirsiniz.
+[source,c++]
+----
+~list();
+----
+
+== Liste ile Kullanılan Fonksiyonlar
+
+*1.push_back():* Listenin sonuna yeni bir eleman eklemek için kullanılır. Listenin L olduğunu ve sonuna bir eleman eklemek istediğimizi varsayalım.
+[source,c++]
+----
+L.push_back(element);
+----
+
+*2.push_front():* Listenin başına yeni bir eleman eklemek için kullanılır. Listenin L olduğunu ve önüne bir eleman eklemek istediğimizi varsayalım.
+[source,c++]
+----
+L.push_front(element);
+----
+
+*3.pop_back():* Bir elemanı listenin sonundan kaldırmak için kullanılır. Listenin boyutunu bir küçültür. Listenin L olduğunu varsayalım.
+[source,c++]
+----
+L.pop_back();
+----
+
+*4.pop_front():* Bir elemanı listenin başından kaldırmak için kullanılır. Listenin boyutunu bir küçültür. Listenin L olduğunu varsayalım.
+[source,c++]
+----
+L.pop_front();
+----
+
+*5.front():* Listedeki ilk elemanı döndürür. Dolayısıyla, listenin ilk elemanının değerini kontrol etmek istiyorsak, kullanılabilir.
+[source,c++]
+----
+L.front();
+----
+
+*6.back():* Listeden son elemanı döndürür. Listenin son elemanının değerini kontrol etmek istersek kullanılabilir.
+[source,c++]
+----
+L.back();
+----
+
+*7.empty():* Liste boşsa 1, aksi takdirde 0 döndürür.
+[source,c++]
+----
+L.empty();
+----
+
+*8.insert():* Elemanları listenin herhangi bir yerine eklemek için kullanılır. Üç parametre konumu, eklemek için birkaç eleman ve eklemek için değer alır. Varsayılan olarak, eleman sayısı 1 olarak ayarlanmıştır.
+[source,c++]
+----
+L.insert(iterator, num_of_elements, element);
+----
+
+*9.erase():* Listeden bir elemanı veya bir dizi elemanı silmek için kullanılır. Bir elemanı silmek için yalnızca bir tamsayı konumu geçer ve bu silinir. Bir aralığı silmek için yineleyici başlatma ve bitirme yineleyicisinin geçirilmesi gerekir.
+[source,c++]
+----
+L.erase(list_iterator); //bir elemanı silmek için
+
+L.erase(start_iterator, last_iterator); // aralıktaki elemanlar için
+----
+
+*10.assign():* Geçerli elemanı değiştirerek listeye yeni elemanlar atamak için kullanılır ve listeyi yeniden boyutlandırır. İki parametre atanacak değer sayısı ve ikincisi atanacak değerdir.
+[source,c++]
+----
+L.assign(number of times, value);
+----
+
+*11.remove():* Bir değeri parametre olarak alır ve bu değere sahip tüm elemanları listeden kaldırır.
+[source,c++]
+----
+L.remove(value);
+----
+
+*12.reverse():* Adından da anlaşılacağı gibi, listedeki elemanların sırasını tersine çevirir.
+[source,c++]
+----
+L.reverse();
+----
+
+*13.size():* Listede bulunan eleman sayısını döndürür.
+[source,c++]
+----
+L.size();
+----
+
+*14.resize():* Listeyi yeniden boyutlandırır.
+[source,c++]
+----
+L.resize();
+----
+
+*15.begin():* Yineleyiciyi listedeki ilk elemanı döndürür.
+[source,c++]
+----
+List <data_type>::iterator = L.begin();
+----
+
+*16.end():* Son elemanı izleyen teorik son elemana işaret eden yineleyiciyi döndürür.
+[source,c++]
+----
+L.end();
+----
+
+*17.sort():* Bir listenin elemanlarını artan sırayla sıralamak için kullanılır.
+[source,c++]
+----
+L.sort();
+----
+
+*18.clear():* Liste kabının tüm elemanlarını kaldırmak için kullanılır. Böylece listenin boyutu 0 olur.
+[source,c++]
+----
+L.clear();
+----
+
+*19.advance():* listenin n. elemanı döndürür.
+[source,c++]
+----
+advance(listeAdi,n);
+----
+
+*20.merge():* İki listeyi sıralı birleştirir.
+[source,c++]
+----
+liste1.merge(liste2);
+----
+
+== Örneğin
+
+[source,c++]
+----
+#include <iostream>
+#include <list>
+#include <string>
+
+using namespace std;
+
+int main() {
+    list<int> sayilar;
+    sayilar.push_front(1); //Listenin başına 1 ekler. Eleman yoksa ilk elemanı oluşturur.
+    //push_front(): Basa eleman ekleme.
+    //push_back(): Sona eleman ekleme.
+    sayilar.push_front(2); //Başa 2 ekler.
+    sayilar.push_back(3); //Sona 3 ekler.
+    sayilar.push_back(4); //Sona 4 ekler.
+    cout<<"sayilar1: ";
+    for(auto& item: sayilar) cout << item << ' ';//foreach döngüsü ile listeyi yazdırır
+    cout<<endl;
+
+    list<int> sayilar2{0, 1, 2, 3, 4, 5, 6, 7};//liste oluşturulurken elemanları tanımlanabilir
+    cout<<"sayilar2: ";
+    if(sayilar2.empty()==1)  cout<<"liste boş"; // liste boş ise
+    else {
+        for(auto& item: sayilar2) cout << item << ' ';//foreach döngüsü ile listeyi yazdırır
+        cout<<endl;
+    }
+
+    //iterator: adres döndürür
+    list<int> ::iterator x=sayilar2.begin();//ilk elemanın adresini döndürür
+    advance(x,3); //baştan 2. elemanı verir
+    list<int> ::iterator y=sayilar2.end();//son elemanın adresini döndürür
+    advance(y,2); //sondan 5. elemanı verir
+
+
+    list<string> metin{"Merhaba", "Dünya"};//string liste
+    for(auto& item: metin) cout << item << ' ';
+    cout<<endl;
+
+    list<string> metin2(metin);  //metin'i metin2'ye atar.
+    for(auto& item: metin2) cout << item << ' ';
+    cout<<endl;
+
+    list<string> metin3(metin.begin(), metin.end()); // metinin başlangıcından sonuna metin3'e atar.
+    for(auto& item: metin3) cout << item << ' ';
+    cout<<endl;
+
+    list<string> metin4(5, "A"); //5 tane A ekler
+    for(auto& item: metin4) cout << item << ' ';
+    cout<<endl;
+    metin4.erase(metin4.begin());//listenin ilk elemanını siler
+    //begin(): ilk elemanı dondurur
+    //erase(): parametre verilen elemanı siler
+    for(auto& item: metin4) cout << item << ' ';
+    cout<<endl;
+
+    list<int> liste1 = { 1,2,3,4,5 };
+    list<int> liste2 = { 6,7,8,9 };
+
+    liste1.sort();//sort():k->b sıralar
+
+    liste2.sort();
+    cout<<"liste1: ";
+    for(auto& item: liste1) cout << item << ' ';
+    cout<<endl;
+    cout<<"liste2: ";
+    for(auto& item: liste2) cout << item << ' ';
+    cout<<endl;
+
+    cout<<"sıralı liste: ";
+    liste1.merge(liste2); //merge(): listeleri birleştir
+    for(auto& item: liste1) cout << item << ' ';
+    cout<<endl;
+
+    liste2.merge(liste1);
+    for(auto& item: liste2) cout << item << ' ';
+    cout<<endl;
+    //  liste1.merge(liste2); ile liste2.merge(liste1); aynı sonucu verirler
+
+
+    list<char> karakter;
+    karakter.assign(5, 'x');  //listeye 5 tane char degeri atar.
+    //assing(): atama yapar.
+    for (char item : karakter) cout << item << ' ';
+    cout<<endl;
+
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ sayilar1: 2 1 3 4 
+ sayilar2: 0 1 2 3 4 5 6 7 
+ Merhaba Dünya 
+ Merhaba Dünya 
+ Merhaba Dünya 
+ A A A A A 
+ A A A A 
+ liste1: 1 2 3 4 5 
+ liste2: 6 7 8 9 
+ sıralı liste: 1 2 3 4 5 6 7 8 9 
+ 1 2 3 4 5 6 7 8 9 
+ x x x x x 
+ 
+ 

@@ -1,0 +1,291 @@
+= VList
+:toc:
+
+== VList Nedir?
+VList, dizilerin hızlı endekslemesini eksilerini temel alan (veya tekli bağlantılı) bağlantılı listelerin kolayca genişletilmesi ile birleştiren kalıcı bir veri yapısıdır.
+
+Diziler gibi, VListler ortalama olarak sabit zamanlı aramaya sahiptir ve oldukça kompakttır, işaretçiler için yalnızca O (log n) depolama alanı gerektirir ve referans konumlarından faydalanmalarını sağlar. Tek başına bağlı veya eksilerini temel alan listeler gibi, bunlar kalıcıdır ve öğeler sabit zamanda ön tarafa eklenebilir veya önden kaldırılabilir. Uzunluk ayrıca O (log n) zamanında da bulunabilir.
+
+**Bir VList'in birincil işlemleri şunlardır:**
+ 
+1. Kth öğesini bulun (O (1) ortalama, O (log n) en kötü durum)
+
+2. VList ortalamasının önüne bir eleman ekleyin (O (1) ara sıra tahsisli)
+
+3. Eski bir dizinin ikinci öğesinden başlayarak yeni bir dizi edinin (O (1))
+
+4. Listenin uzunluğunu hesaplayın (O (log n))
+
+==Örneğin
+
+** Vlist ile listeye eleman ekleme,silme, uzunluk bulma,k-th elemanını bulma...**
+
+
+[source,c++]
+----
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+using namespace std;
+
+//sublist düğümü
+struct sublist
+{
+    struct sublist* next;
+    int *buf;
+};
+//vlist_t düğümü
+typedef struct vlist_t
+{
+    sublist* head;
+    int last_size, ofs;
+}*vlist;
+
+class v_list
+{
+public:
+    sublist *sublist_new(int);
+    vlist v_new();
+    void v_del(vlist);
+    int v_size(vlist);
+    int* v_addr(vlist, int);
+    int v_elem(vlist, int);
+    int* v_unshift(vlist, int);
+    int v_shift(vlist);
+    v_list()
+    {}
+};
+
+//yeni  sublist oluşturulur
+sublist *v_list::sublist_new(int s)
+{
+    //sublist* sub = (sublist *)malloc(sizeof(sublist) + sizeof(int) * s);
+    sublist* sub = new sublist();
+    sub->buf = (int*)(sub + 1);
+    sub->next = 0;
+    return sub;
+}
+
+//sublist'ten vlist oluşturma
+vlist v_list::v_new()
+{
+    vlist v = new(vlist_t);
+    v->head = sublist_new(1);
+    v->last_size = 1;
+    v->ofs = 0;
+    return v;
+}
+
+//vlist'ti silme
+void v_list::v_del(vlist v)
+{
+    sublist *s;
+    while (v->head)
+    {
+        s = v->head->next;
+        free(v->head);
+        v->head = s;
+    }
+    free(v);
+}
+
+//vlist uzunluğunu hesaplama
+int v_list::v_size(vlist v)
+{
+    return v->last_size * 2 - v->ofs - 2;
+}
+
+int *v_list::v_addr(vlist v, int idx)
+{
+    sublist *s = v->head;
+    int top, i;
+    top = v->last_size;
+    i = idx + v->ofs;
+    if (i + 2 >= (top << 1))
+    {
+        cout<<"!: idx "<<idx<<" out of range"<<endl;
+        abort();
+    }
+    while (s && i >= top)
+    {
+        s = s->next;
+        i ^= top;
+        top >>= 1;
+    }
+    return s->buf + i;
+}
+
+
+//Vlist'te aranan elemanı bulan fonksiyon
+int v_list::v_elem(vlist v, int idx)
+{
+    return *v_addr(v, idx);
+}
+
+//vlist'e eleman ekleme
+int *v_list::v_unshift(vlist v, int x)
+{
+    sublist* s;
+    int *p;
+    if (!v->ofs)
+    {
+        if (!(s = sublist_new(v->last_size << 1)))
+        {
+            cout<<"allocation failure"<<endl;
+            return 0;
+        }
+        v->ofs = (v->last_size <<= 1);
+        s->next = v->head;
+        v->head = s;
+    }
+    *(p = v->head->buf + --v->ofs) = x;
+    return p;
+}
+
+//vlist'ten eleman silme
+int v_list::v_shift(vlist v)
+{
+    sublist* s;
+    int x;
+    if (v->last_size == 1 && v->ofs == 1)
+    {
+        cout<<"Boş liste"<<endl;
+        abort();
+    }
+    x = v->head->buf[v->ofs++];
+    if (v->ofs == v->last_size)
+    {
+        v->ofs = 0;
+        if (v->last_size > 1)
+        {
+            s = v->head;
+            v->head = s->next;
+            v->last_size >>= 1;
+            free(s);
+        }
+    }
+    return x;
+}
+
+
+int main()
+{
+    int i, x, tercih;
+    v_list vl;
+    vlist v = vl.v_new();
+    while (1)
+    {
+        cout<<"Vlist'deki İşlemler"<<endl;
+        cout<<"------------------"<<endl;
+        cout<<"1.Vlist'e Eleman Ekle\n2.Vlist'in uzunluğunu hesapla\n3.K-th Elemanını Bul\n"
+              "4.Vlist'ten Eleman Sil\n5.Vlist Elemanlarını Yazdır\n6.Çıkış\nTercih="<<endl;
+        cin>>tercih;
+        cout<<endl;
+        switch(tercih)
+        {
+            case 1:
+                cout<<"Eklenecek elemanı girin: ";
+                cin>>x;
+                vl.v_unshift(v, x);
+                break;
+            case 2:
+                cout<<"Vlist'in boyutu: ";
+                cout<<vl.v_size(v)<<endl;
+                break;
+            case 3:
+                cout<<"Bulunacak elemanının konumunu girin: ";
+                cin>>x;
+                if (x > vl.v_size(v))
+                    cout<<"Konum aralık dışında"<<endl;
+                else
+                    cout<<"Konumdaki Eleman: "<<x<<": "<<vl.v_elem(v, x - 1)<<endl;
+                break;
+            case 4:
+                cout<<"Silinen Eleman: "<<vl.v_shift(v)<<endl;
+                break;
+            case 5:
+                cout<<"Vlist Elemanları: ";
+                for (i = 0;i < vl.v_size(v);i++)
+                    cout<<vl.v_elem(v, i)<<" ";
+                cout<<endl;
+                break;
+            case 6:
+                exit(1);
+                break;
+            default:
+                cout<<"Yanlış Seçim"<<endl;
+        }
+    }
+    vl.v_del(v);
+    return 0;
+}
+----
+
+Ekran Çıktısı:
+
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 1
+ Eklenecek elemanı girin: 2
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 1
+ Eklenecek elemanı girin: 6
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 1
+ Eklenecek elemanı girin: 5
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 3
+ Bulunacak elemanının konumunu girin: 2
+ Konumdaki Eleman: 2: 6
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 5
+ Vlist Elemanları:5 6 2 
+ Vlist'deki İşlemler
+ ------------------
+ 1.Vlist'e Eleman Ekle
+ 2.Vlist'in uzunluğunu hesapla
+ 3.K-th Elemanını Bul
+ 4.Vlist'ten Eleman Sil
+ 5.Vlist Elemanlarını Yazdır
+ 6.Çıkış
+ Tercih=
+ 6

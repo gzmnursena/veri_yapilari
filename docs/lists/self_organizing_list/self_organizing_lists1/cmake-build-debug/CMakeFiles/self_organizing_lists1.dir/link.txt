@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/self_organizing_lists1.dir/main.cpp.o  -o self_organizing_lists1 
